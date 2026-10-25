@@ -1,0 +1,1518 @@
+diff --git a/TOSIOS/README.md b/TOSIOS/README.md
+index e290191bdd24fa0aae4d6bb43def42a57be34f5d..af20c358f9a9da1a3c84bc8a0a8b95e34934db73 100644
+--- a/TOSIOS/README.md
++++ b/TOSIOS/README.md
+@@ -1,215 +1,13 @@
+-# <p align="center"><img alt="TOSIOS" src="images/title.png" /></p>
++# TOSIOS client with Gamira
+ 
+-[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/halftheopposite/tosios/blob/master/LICENSE)
+-[![](https://img.shields.io/docker/pulls/halftheopposite/tosios)](https://hub.docker.com/r/halftheopposite/tosios)
++Edit `packages/client/public/client-config.js` to set `gamiraUrl` and
++`platformUrl` (the authentication platform base URL, without `/api/v1`).
++These are public URLs; the client needs no administrator credentials.
+ 
+-The Open-Source IO Shooter is an open-source multiplayer game in the browser (desktop or browser). It is meant to be hostable and playable by anyone. This is not an attempt at creating an outstanding gaming experience, but to create an easily understandable and modifiable multiplayer browser game.
++Run `yarn install`, `BUILD_MODE=production yarn build`, then `yarn serve`.
++Open http://localhost:8080. Deploy the generated public directory to a static
++web host if desired; both APIs must allow the web client's origin through CORS.
++OAuth redirects must return to the deployed client origin.
+ 
+-**Desktop version**
+-
+-![banner](images/banner.jpg "In-game screenshot of desktop")
+-
+-**Mobile version**
+-
+-<img src="images/mobile.jpg" alt="In-game screenshot of mobile" width="400"/>
+-
+-## 🕹️ Playing
+-
+-Want to play right away? You can play the game by following (and sharing) this link https://tosios.online.
+-
+-**Rules**
+-
+-The game principles are fairly easy to grasp:
+-
+-1. Every player is positionned randomly on the map during the `lobby`.
+-2. When the `game` starts, each player must take down others (either in death match, or team death match).
+-3. There are some `potions` on the map that restore health.
+-4. The last player (or team) alive wins 🎉.
+-
+-You can see a very small amount of gameplay below (the framerate of this GIF is low):
+-
+-![banner](images/game.gif "An in-game animation")
+-
+-**Movements**
+-
+-- Move: <kbd>W</kbd> <kbd>A</kbd> <kbd>S</kbd> <kbd>D</kbd> or <kbd>↑</kbd> <kbd>←</kbd> <kbd>↓</kbd> <kbd>→</kbd>.
+-- Aim: <kbd>Mouse</kbd>
+-- Shoot: <kbd>Left click</kbd> or <kbd>Space</kbd>
+-
+-## 🚀 Running
+-
+-You can build this game yourself easily if you are experienced with modern javascript development or Docker.
+-
+-### Docker Compose 🐋
+-
+-The easiest way to run the game is to use the `docker-compose.yml` file with the following command `docker-compose up -d`.
+-
+-The `up` option will download the image if you don't have it yet and run the container.
+-
+-The `-d` option will run the container in the background.
+-
+-### Docker 🐋
+-
+-You can also build the Docker image yourself:
+-
+-1. Build it with `docker build -t tosios .`
+-2. Run it with `docker run -d -p 3001:3001 [IMAGE_ID]`
+-
+-The `-d` option will run the container in the background (recommended if you want to have access to your current terminal session).
+-
+-The `-p` option will let you choose on which port the container will listen (e.g. the first `3001` will make it accessible to http://localhost:3001), and on which internal port must the server listen (e.g. the second `3001`).
+-
+-The `[IMAGE_ID]` is easily discoverable by running `docker images` in the terminal.
+-
+-### Local
+-
+-You can also build the game directly using `yarn` (you cannot use `npm install` as this repo is using the `workspace` feature of Yarn):
+-
+-1. Install dependencies with `yarn`.
+-2. Build game with `yarn build`.
+-3. Run `yarn serve`.
+-4. The game is available at http://localhost:3001.
+-
+-**Tips**
+-
+-If you want to **play with friends** at work or home, you can run
+-the following command to get your local network IP: `ipconfig getifaddr en0`. You can then share the obtained IP and port(ex: http://192.168.1.10:3001).
+-
+-## 🔧 Development
+-
+-To run the project in development:
+-
+-1. Install dependencies with `yarn`.
+-2. Make a first build with `yarn build`
+-3. Start game with `yarn dev`.
+-4. The game is available at http://localhost:3001.
+-
+-## Project architecture
+-
+-This project is a monorepo (with the help of Yarn workspaces). It contains the following packages:
+-
+-- `client` - The frontend application using `PIXI.js` and `Colyseus.js`.
+-- `server` - The authoritarive server running on `NodeJS`, `Express` and `Colyseus`.
+-- `common` - A collection of constants and methods shared amongst `client` and `server`.
+-
+-## Modding
+-
+-### Maps
+-
+-Anyone can create their own map to use in TOSIOS.
+-
+-#### How to create my map?
+-
+-The maps available in TOSIOS have all been created thanks to [Tiled Map Editor](https://www.mapeditor.org/) (TME). You must first download this software in order to start creating your own map. I also invite you to read some tutorial for an easier beginning.
+-
+-The most important concepts to create a functional map are `layers` and `tilesets` (I invite you to open one of the existing map in TME to familiarize yourself with how maps are structured. It will make things 10x easier if you have a living example under your eyes).
+-
+-**Layers**
+-
+-A `layer` is where your tiles are placed to form a map. You can combine multiple `layers` on top of each other so that you can get a crate over a ground tile, or a spider web over a wall for example.
+-
+-There are two reserved layers that should be present at all time (although not rendered):
+-
+-- `collisions`: for the client and server to know where the player can move or not (ex: walls or pits), or shoot through (ex: pits or small rocks).
+-- `spawners`: for the server to determine the starting position of a player.
+-
+-Other than that, you can add as many `layers` as you want and they will be rendered by `PIXI.js` in a WYSIWYG manner (order is maintained).
+-
+-Although in the `dungeon.png` spritesheet I use colored tiles to represent `collisions` (red and blue) and spawners (green), you can use any tile you want as it won't be rendered anyway.
+-
+-<img src="images/tme-layers.png" alt="drawing"/>
+-
+-**Tilesets**
+-
+-The `tilesets` is where lie the splitted spritesheet and its collision, animated and spawner tiles.
+-
+-When defining which tile will be used for collisions it is very important to set its `type` field to either:
+-
+-- `half`: a `player` CAN'T go through, but a `bullet` CAN go through.
+-- `full`: a `player` CAN'T go through, and a `bullet` CAN'T go through.
+-
+-This can be done by selecting a tile in the tilesets editor, and entering its `type` on the left pane.
+-
+-<img src="images/tme-tilesets.png" alt="The collision tile (red) is selected"/>
+-
+-#### How to add my map to the game?
+-
+-If you want to add your map to the game:
+-
+-1. If you have a custom spritesheet image, add it in `/packages/client/src/images/maps/custom.png`
+-2. Open `/packages/client/src/images/maps/index.ts`, and add the following statements:
+-
+-```typescript
+-import gigantic from "./gigantic.png";
+-import custom from "./custom.png"; // <- Add this line
+-
+-export const SpriteSheets: { [key: string]: string } = {
+-  "dungeon.png": dungeon,
+-  "custom.png": custom, // <- Add this line
+-};
+-```
+-
+-3. Add your map file (TMX as JSON) in `/packages/common/maps/custom.json`.
+-4. Open `/packages/common/maps/index.ts`:
+-
+-```typescript
+-// ...
+-import gigantic from "./gigantic.json";
+-import custom from "./custom.json"; // <- Add this line
+-
+-export const List: { [key: string]: TMX.IMap } = {
+-  gigantic,
+-  custom, // <- Add this line
+-};
+-```
+-
+-5. Open `/packages/common/constants.ts`:
+-
+-```typescript
+-// ...
+-export const MAPS_NAMES = ["gigantic", "custom"]; // <- Add this entry
+-// ...
+-```
+-
+-## Roadmap for v1.0.0
+-
+-This is not an exhaustive, nor final, features list but it will give you a good indication on what I am working on:
+-
+-- [x] Let users select the number of players in a room.
+-- [x] Publish the docker image onto a registry and add a `docker-compose` file.
+-- [x] Add a playable demo website for anyone to test and play the game.
+-- [x] Add mobile mode (updated GUI and virtual joysticks).
+-- [x] Add visual feedback when a player gets hit.
+-- [x] Add smoother bullets.
+-- [x] Implement a R-Tree for performances.
+-- [x] Add players spawner object instead of randomized points.
+-- [x] Add support for JSON TMX format (Tiled).
+-- [x] Add a Team Death Match mode.
+-- [x] Add some monsters. (Q1 2020)
+-- [x] Improve the UI of the game menu. (Q2 2020)
+-- [x] Improve particle effects. (Q3 2020)
+-- [x] Add analytics
+-- [x] Add sound effects. (Q3 2020)
+-- [ ] Add powers up and pickable items.
+-- [ ] Add ground monster.
+-- [ ] Add random dungeon generation.
+-
+-## Special thanks
+-
+-Thanks to [@endel](https://github.com/endel) for his fabulous work on [Colyseus](https://github.com/colyseus/colyseus) that made this game possible.
+-
+-Thanks to the [PIXI.js](https://github.com/pixijs/pixi.js) team for their incredible library and up-to-date documentation.
+-
+-Thanks to [@pixel_poem](https://twitter.com/pixel_poem) for the art package he published on Itch.io which made this game looks cool instantly.
+-
+-Thanks to [@thorbjorn81](https://twitter.com/thorbjorn81) for the many years of work on the [Tiled](https://github.com/bjorn/tiled) map editor.
+-
+-## Licenses
+-
+-This project is under the [MIT](https://github.com/halftheopposite/tosios/blob/master/LICENSE) license.
+-
+-The major libraries and assets used in this project and their licenses:
+-
+-- Colyseus: [MIT](https://github.com/colyseus/colyseus/blob/master/LICENSE)
+-- PIXI.js: [MIT](https://github.com/pixijs/pixi.js/blob/dev/LICENSE)
+-- Font "Press Start 2P": [Creative Common Zero](http://www.zone38.net/font/)
++Game servers, the Gamira API and authentication services are operated separately.
++Upstream: https://github.com/halftheopposite/TOSIOS (MIT).
+diff --git a/TOSIOS/package.json b/TOSIOS/package.json
+index 8ccdd04fb816e74fdc7248136765d4716a3de3e8..543c57005ce58a7e7b95e6449438a1e4ee0237fb 100644
+--- a/TOSIOS/package.json
++++ b/TOSIOS/package.json
+@@ -1,46 +1,40 @@
+ {
+-    "name": "tosios",
+-    "version": "0.16.1",
+-    "private": true,
+-    "repository": {
+-        "type": "git",
+-        "url": "https://github.com/halftheopposite/tosios"
+-    },
+-    "author": {
+-        "name": "Aymeric Chauvin",
+-        "url": "https://halftheopposite.dev"
+-    },
+-    "workspaces": [
+-        "packages/*"
+-    ],
+-    "scripts": {
+-        "client": "yarn workspace @tosios/client",
+-        "common": "yarn workspace @tosios/common",
+-        "server": "yarn workspace @tosios/server",
+-        "clean": "sh ./scripts/clean.sh",
+-        "dev": "sh ./scripts/dev.sh",
+-        "build": "ts-node ./scripts/build.ts",
+-        "serve": "sh ./scripts/serve.sh"
+-    },
+-    "devDependencies": {
+-        "@types/compression": "^1.7.0",
+-        "@types/cors": "^2.8.6",
+-        "@types/howler": "^2.2.1",
+-        "@types/jest": "^24.0.25",
+-        "@types/node": "^13.1.2",
+-        "@types/pixi.js": "^5.0.0",
+-        "@types/querystringify": "^2.0.0",
+-        "@types/rbush": "^3.0.0",
+-        "@types/reach__router": "^1.2.6",
+-        "@types/react": "^16.9.17",
+-        "@types/react-dom": "^16.9.4",
+-        "@types/react-helmet": "^5.0.14",
+-        "concurrently": "^7.0.0",
+-        "esbuild": "^0.14.25",
+-        "esbuild-plugin-svgr": "^1.0.0",
+-        "nodemon": "^2.0.15",
+-        "prettier": "^2.5.1",
+-        "ts-node": "^10.7.0",
+-        "typescript": "^4.6.2"
+-    }
++  "name": "tosios",
++  "version": "0.16.1",
++  "private": true,
++  "repository": {
++    "type": "git",
++    "url": "https://github.com/halftheopposite/tosios"
++  },
++  "author": {
++    "name": "Aymeric Chauvin",
++    "url": "https://halftheopposite.dev"
++  },
++  "workspaces": [
++    "packages/client",
++    "packages/common"
++  ],
++  "scripts": {
++    "client": "yarn workspace @tosios/client",
++    "common": "yarn workspace @tosios/common",
++    "build": "ts-node ./scripts/build-client.ts",
++    "serve": "python3 -m http.server 8080 --directory packages/client/public"
++  },
++  "devDependencies": {
++    "@types/howler": "^2.2.1",
++    "@types/jest": "^24.0.25",
++    "@types/node": "^13.1.2",
++    "@types/pixi.js": "^5.0.0",
++    "@types/querystringify": "^2.0.0",
++    "@types/rbush": "^3.0.0",
++    "@types/reach__router": "^1.2.6",
++    "@types/react": "^16.9.17",
++    "@types/react-dom": "^16.9.4",
++    "@types/react-helmet": "^5.0.14",
++    "esbuild": "^0.14.25",
++    "esbuild-plugin-svgr": "^1.0.0",
++    "prettier": "^2.5.1",
++    "ts-node": "^10.7.0",
++    "typescript": "^4.6.2"
++  }
+ }
+diff --git a/TOSIOS/packages/client/public/client-config.js b/TOSIOS/packages/client/public/client-config.js
+new file mode 100644
+index 0000000000000000000000000000000000000000..e60c3bd78b8f5a5c3df12296ce9efa58fc1f65d3
+--- /dev/null
++++ b/TOSIOS/packages/client/public/client-config.js
+@@ -0,0 +1,5 @@
++// Public service URLs only. Never put credentials or admin secrets in this file.
++window.GAMIRA_CONFIG = {
++    gamiraUrl: "http://localhost:30080",
++    platformUrl: "http://localhost:30090"
++};
+diff --git a/TOSIOS/packages/client/public/index.html b/TOSIOS/packages/client/public/index.html
+index 39692e007725d261cbd9aba43dd9fd4ade3b21d6..e1aa1dd41a0f09b47d7a1108f48b52a623b5b585 100755
+--- a/TOSIOS/packages/client/public/index.html
++++ b/TOSIOS/packages/client/public/index.html
+@@ -44,6 +44,7 @@
+     <body>
+         <noscript>You need to enable JavaScript to run this app.</noscript>
+         <div id="root"></div>
++        <script src="/client-config.js"></script>
+         <script src="/script.js"></script>
+     </body>
+ </html>
+diff --git a/TOSIOS/packages/client/src/api/authClient.ts b/TOSIOS/packages/client/src/api/authClient.ts
+new file mode 100644
+index 0000000000000000000000000000000000000000..693848fbe0f34398aa1d4b3bf871a03ede2b43e6
+--- /dev/null
++++ b/TOSIOS/packages/client/src/api/authClient.ts
+@@ -0,0 +1,204 @@
++import { GAMIRA_API, PLATFORM_URL as AUTH_API } from './clientConfig';
++
++let redirecting = false;
++
++export function getToken(): string | null {
++    return localStorage.getItem('x-token');
++}
++
++function setToken(value: string): void {
++    localStorage.setItem('x-token', value);
++}
++
++function removeToken(): void {
++    localStorage.removeItem('x-token');
++}
++
++export async function logout(): Promise<void> {
++    const token = getToken();
++    const ticketId = sessionStorage.getItem('ticket-id');
++    if (token && ticketId) {
++        await fetch(`${GAMIRA_API}/matchmaking/tickets/${ticketId}`, {
++            method: 'DELETE',
++            headers: { 'x-token': token },
++        }).catch(() => {});
++    }
++    sessionStorage.removeItem('ticket-id');
++    sessionStorage.removeItem('tab-id');
++    removeToken();
++    localStorage.removeItem('auth-keypair');
++    localStorage.removeItem(OAUTH_LEADER_KEY);
++    window.location.href = window.location.pathname;
++}
++
++export function getQueryParam(param: string): string | null {
++    const value = new URLSearchParams(window.location.search).get(param);
++    return value ? decodeURIComponent(value) : null;
++}
++
++async function generateKeyPair(): Promise<{ publicKeyPEM: string; privateKeyPEM: string }> {
++    const keyPair = await window.crypto.subtle.generateKey(
++        { name: 'RSA-OAEP', modulusLength: 2048, publicExponent: new Uint8Array([0x01, 0x00, 0x01]), hash: 'SHA-256' },
++        true,
++        ['encrypt', 'decrypt'],
++    );
++    const exportKey = async (key: CryptoKey, isPublic: boolean) => {
++        const exported = await window.crypto.subtle.exportKey(isPublic ? 'spki' : 'pkcs8', key);
++        const b64 = window.btoa(String.fromCharCode(...new Uint8Array(exported)));
++        const header = isPublic ? 'PUBLIC KEY' : 'PRIVATE KEY';
++        return `-----BEGIN ${header}-----\n${b64.match(/.{1,64}/g)!.join('\n')}\n-----END ${header}-----`;
++    };
++    return {
++        publicKeyPEM: await exportKey(keyPair.publicKey, true),
++        privateKeyPEM: await exportKey(keyPair.privateKey, false),
++    };
++}
++
++async function decryptText(privateKeyPEM: string, encryptedB64: string): Promise<string> {
++    const b64 = privateKeyPEM
++        .split('\n')
++        .filter((l) => !l.includes('-----'))
++        .join('');
++    const keyBuffer = Uint8Array.from(atob(b64), (c) => c.charCodeAt(0)).buffer;
++    const privateKey = await crypto.subtle.importKey(
++        'pkcs8',
++        keyBuffer,
++        { name: 'RSA-OAEP', hash: 'SHA-256' },
++        false,
++        ['decrypt'],
++    );
++    const encBuf = Uint8Array.from(atob(encryptedB64), (c) => c.charCodeAt(0)).buffer;
++    const decBuf = await crypto.subtle.decrypt({ name: 'RSA-OAEP' }, privateKey, encBuf);
++    return new TextDecoder().decode(decBuf);
++}
++
++const OAUTH_LEADER_KEY = 'oauth-leader';
++const OAUTH_LEADER_TTL_MS = 300_000;
++const OAUTH_LEADER_WAIT_MS = 300_000;
++
++(function cleanStaleLeader() {
++    const raw = localStorage.getItem(OAUTH_LEADER_KEY);
++    if (!raw) return;
++    const ts = parseInt(raw, 10);
++    if (Number.isNaN(ts) || Date.now() - ts >= OAUTH_LEADER_TTL_MS) {
++        localStorage.removeItem(OAUTH_LEADER_KEY);
++    }
++})();
++
++function claimOAuthLeader(): boolean {
++    const now = Date.now();
++    const raw = localStorage.getItem(OAUTH_LEADER_KEY);
++    if (raw) {
++        const ts = parseInt(raw, 10);
++        if (!Number.isNaN(ts) && now - ts < OAUTH_LEADER_TTL_MS) {
++            return false;
++        }
++    }
++    const stamp = `${now}-${Math.random().toString(36).slice(2, 10)}`;
++    localStorage.setItem(OAUTH_LEADER_KEY, stamp);
++    const readBack = localStorage.getItem(OAUTH_LEADER_KEY);
++    if (readBack !== stamp) {
++        return false;
++    }
++    return true;
++}
++
++function clearOAuthLeader(): void {
++    localStorage.removeItem(OAUTH_LEADER_KEY);
++}
++
++async function waitForLeaderToken(): Promise<string | null> {
++    const deadline = Date.now() + OAUTH_LEADER_WAIT_MS;
++    while (Date.now() < deadline) {
++        await new Promise((r) => setTimeout(r, 500));
++        const t = getToken();
++        if (t) return t;
++        const raw = localStorage.getItem(OAUTH_LEADER_KEY);
++        if (!raw) return null;
++        const ts = parseInt(raw, 10);
++        if (Number.isNaN(ts) || Date.now() - ts >= OAUTH_LEADER_TTL_MS) {
++            localStorage.removeItem(OAUTH_LEADER_KEY);
++            return null;
++        }
++    }
++    clearOAuthLeader();
++    return null;
++}
++
++// Try to obtain a token without redirecting. Returns null if none available.
++export async function tryGetToken(): Promise<string | null> {
++    const existing = getToken();
++    if (existing) {
++        try {
++            const res = await fetch(`${AUTH_API}/api/v1/token/refresh`, { headers: { 'x-token': existing } });
++            if (res.ok) {
++                const token = await res.json();
++                setToken(token);
++                return token;
++            }
++        } catch (_e) {
++            // ignore, fall through to remove stale token
++        }
++        removeToken();
++    }
++
++    const nonce = getQueryParam('nonce');
++    if (nonce) {
++        const keys = JSON.parse(localStorage.getItem('auth-keypair') || 'null');
++        if (keys) {
++            const decrypted = await decryptText(keys.privateKeyPEM, atob(nonce));
++            const res = await fetch(`${AUTH_API}/api/v1/token/issue`, { headers: { 'x-nonce': decrypted } });
++            if (res.ok) {
++                const token = await res.json();
++                setToken(token);
++                clearOAuthLeader();
++                window.history.replaceState(null, '', window.location.pathname);
++                return token;
++            } else {
++                clearOAuthLeader();
++            }
++        } else {
++            clearOAuthLeader();
++        }
++    }
++
++    return null;
++}
++
++// Wait briefly for another tab to produce a token. Returns null on timeout.
++export async function waitForOtherTab(): Promise<string | null> {
++    const raw = localStorage.getItem(OAUTH_LEADER_KEY);
++    if (!raw) return null;
++    const ts = parseInt(raw, 10);
++    if (Number.isNaN(ts) || Date.now() - ts >= OAUTH_LEADER_TTL_MS) return null;
++    return waitForLeaderToken();
++}
++
++// User-triggered sign-in. Claims leader and redirects to GitHub.
++export async function signIn(): Promise<void> {
++    if (redirecting) return;
++    if (!claimOAuthLeader()) {
++        const t = await waitForLeaderToken();
++        if (t) {
++            window.location.reload();
++            return;
++        }
++        if (!claimOAuthLeader()) return;
++    }
++
++    let keys = JSON.parse(localStorage.getItem('auth-keypair') || 'null');
++    if (!keys) {
++        keys = await generateKeyPair();
++        localStorage.setItem('auth-keypair', JSON.stringify(keys));
++    }
++    const encodedKey = btoa(keys.publicKeyPEM);
++    const nonceRes = await fetch(`${AUTH_API}/api/v1/nonce`, {
++        method: 'POST',
++        headers: { 'content-type': 'application/json' },
++        body: JSON.stringify({ publicKey: encodedKey }),
++    });
++    const rawNonce = await nonceRes.json();
++    const state = btoa(JSON.stringify({ nonce: rawNonce, authenticationType: 'web' }));
++    redirecting = true;
++    window.location.href = `${AUTH_API}/api/v1/auth/github?state=${state}`;
++}
+diff --git a/TOSIOS/packages/client/src/api/clientConfig.ts b/TOSIOS/packages/client/src/api/clientConfig.ts
+new file mode 100644
+index 0000000000000000000000000000000000000000..e14f8085bda69790d9cd73553f02ca6693899e66
+--- /dev/null
++++ b/TOSIOS/packages/client/src/api/clientConfig.ts
+@@ -0,0 +1,8 @@
++declare global {
++    interface Window {
++        GAMIRA_CONFIG?: { gamiraUrl?: string; platformUrl?: string };
++    }
++}
++const settings = window.GAMIRA_CONFIG || {};
++export const GAMIRA_API = (settings.gamiraUrl || 'http://localhost:30080').replace(/\/+$/, '');
++export const PLATFORM_URL = (settings.platformUrl || 'http://localhost:30090').replace(/\/+$/, '');
+diff --git a/TOSIOS/packages/client/src/api/gamiraClient.ts b/TOSIOS/packages/client/src/api/gamiraClient.ts
+new file mode 100644
+index 0000000000000000000000000000000000000000..b00d72d92492d01f2736bdd83fe35e89cb828ae1
+--- /dev/null
++++ b/TOSIOS/packages/client/src/api/gamiraClient.ts
+@@ -0,0 +1,141 @@
++import { GAMIRA_API, PLATFORM_URL as AUTH_API } from './clientConfig';
++import type { IceServer } from './iceTunnel';
++const GAME_MODE_ID = 'gm_tosios';
++
++export interface MatchmakingTicket {
++    ticket_id: string;
++    status: 'queued' | 'matched' | 'cancelled';
++    // ice_servers is present only when the deployment runs a TURN mode; the
++    // optional tunnel uses it, and the direct ip/port stays the default path.
++    connection?: { ip: string; port: number; ice_servers?: IceServer[] };
++    team_id?: string;
++    session_id?: string;
++    region_id?: string;
++}
++
++// region_id -> public API base URL, from GET /regions. In a multi-location
++// deployment each region runs its own cluster behind its own hostname, and only
++// that cluster can act on the region's tickets and sessions. Empty api_endpoint
++// (the single-location default) means "use GAMIRA_API", so this is inert until
++// regions actually carry endpoints.
++let regionEndpoints: Record<string, string> | null = null;
++
++async function loadRegionEndpoints(token: string): Promise<Record<string, string>> {
++    if (regionEndpoints) return regionEndpoints;
++    const map: Record<string, string> = {};
++    try {
++        const res = await fetch(`${GAMIRA_API}/regions?limit=200`, { headers: { 'x-token': token } });
++        if (res.ok) {
++            const data = await res.json();
++            for (const r of data.items ?? []) {
++                if (r.api_endpoint) map[r.region_id] = r.api_endpoint;
++            }
++        }
++    } catch {
++        // Discovery is best-effort: without it every call uses GAMIRA_API, which
++        // is correct for a single-location deployment.
++    }
++    regionEndpoints = map;
++    return map;
++}
++
++async function baseFor(token: string, regionId?: string): Promise<string> {
++    if (!regionId) return GAMIRA_API;
++    const map = await loadRegionEndpoints(token);
++    return map[regionId] || GAMIRA_API;
++}
++
++async function gamiraFetch(
++    token: string,
++    path: string,
++    init?: RequestInit,
++    regionId?: string,
++): Promise<Response> {
++    const base = await baseFor(token, regionId);
++    const res = await fetch(`${base}${path}`, {
++        ...init,
++        headers: { ...(init?.headers || {}), 'x-token': token },
++    });
++    // 421 Misdirected Request: this cluster does not own the resource. The
++    // region map is stale (endpoint changed, or the resource moved), so drop it
++    // and retry once against a freshly resolved endpoint.
++    if (res.status === 421 && regionId) {
++        regionEndpoints = null;
++        const retryBase = await baseFor(token, regionId);
++        if (retryBase !== base) {
++            return fetch(`${retryBase}${path}`, {
++                ...init,
++                headers: { ...(init?.headers || {}), 'x-token': token },
++            });
++        }
++    }
++    return res;
++}
++
++async function asError(res: Response, op: string): Promise<Error> {
++    const body = await res.text().catch(() => '');
++    return new Error(`${op} ${res.status}: ${body || res.statusText}`);
++}
++
++export async function bootstrapPlayer(token: string): Promise<void> {
++    await gamiraFetch(token, '/players/me/bootstrap', {
++        method: 'POST',
++        headers: { 'content-type': 'application/json' },
++    });
++}
++
++async function buildPingLatencies(token: string): Promise<Record<string, number>> {
++    const res = await gamiraFetch(token, '/regions?limit=200');
++    if (!res.ok) return {};
++    const data = await res.json();
++    const latencies: Record<string, number> = {};
++    for (const r of data.items ?? []) {
++        // Browser cannot ping UDP game server regions before connecting, so use a fixed placeholder.
++        latencies[r.region_id] = 50;
++    }
++    return latencies;
++}
++
++export async function createTicket(token: string): Promise<MatchmakingTicket> {
++    const ping_latencies = await buildPingLatencies(token);
++    const res = await gamiraFetch(token, '/matchmaking/tickets', {
++        method: 'POST',
++        headers: { 'content-type': 'application/json' },
++        body: JSON.stringify({ game_mode_id: GAME_MODE_ID, ping_latencies }),
++    });
++    if (!res.ok) throw await asError(res, 'createTicket');
++    return res.json();
++}
++
++export async function getTicket(
++    token: string,
++    ticketId: string,
++    regionId?: string,
++): Promise<MatchmakingTicket> {
++    const res = await gamiraFetch(token, `/matchmaking/tickets/${ticketId}`, undefined, regionId);
++    if (!res.ok) throw await asError(res, 'getTicket');
++    return res.json();
++}
++
++export async function cancelTicket(token: string, ticketId: string, regionId?: string): Promise<void> {
++    await gamiraFetch(token, `/matchmaking/tickets/${ticketId}`, { method: 'DELETE' }, regionId);
++}
++
++export async function pollUntilMatched(
++    token: string,
++    ticketId: string,
++    timeoutMs = 30000,
++): Promise<MatchmakingTicket> {
++    const deadline = Date.now() + timeoutMs;
++    // The ticket names the region that owns it; follow-up polls go to that
++    // region's own API rather than whichever endpoint created it.
++    let regionId: string | undefined;
++    while (Date.now() < deadline) {
++        const ticket = await getTicket(token, ticketId, regionId);
++        regionId = ticket.region_id || regionId;
++        if (ticket.status === 'matched' && ticket.connection?.ip) return ticket;
++        if (ticket.status === 'cancelled') throw new Error('Ticket cancelled');
++        await new Promise((r) => setTimeout(r, 500));
++    }
++    throw new Error('Matchmaking timeout after 30s');
++}
+diff --git a/TOSIOS/packages/client/src/api/iceTunnel.ts b/TOSIOS/packages/client/src/api/iceTunnel.ts
+new file mode 100644
+index 0000000000000000000000000000000000000000..04daa5381e97de253d7d8ad3d7d08ec507108f49
+--- /dev/null
++++ b/TOSIOS/packages/client/src/api/iceTunnel.ts
+@@ -0,0 +1,332 @@
++import { GAMIRA_API, PLATFORM_URL as AUTH_API } from './clientConfig';
++/**
++ * Optional NAT-traversal tunnel for the game connection.
++ *
++ * Active only when the matched session advertises ice_servers, i.e. when the
++ * deployment runs a TURN mode. Otherwise nothing here runs and the client connects
++ * over its normal WebSocket — the direct path stays the default.
++ *
++ * A browser cannot spawn the ice-proxy the native demos use, and it does not need
++ * to: it already has a full ICE stack. So this opens an RTCPeerConnection against
++ * the same sidecar those proxies talk to, over a reliable-ordered RTCDataChannel
++ * (the sidecar forwards it to the game server's TCP port — see GAMIRA_ICE_STREAM).
++ *
++ * colyseus.js 0.14 has no way to inject a transport, so rather than fork it, this
++ * temporarily replaces window.WebSocket with a shim that is DataChannel-backed for
++ * the game server's URL only and passes every other URL straight through. colyseus
++ * then rides the tunnel without knowing it exists.
++ */
++
++/** Same endpoint the rest of the client uses; signaling runs against gamira. */
++
++export interface IceServer {
++    urls: string[];
++    username?: string;
++    credential?: string;
++}
++
++/**
++ * True when this session can and should use a tunnel.
++ *
++ * The deployment's TURN_MODE is the switch: gamira advertises ice_servers on the
++ * session exactly when a mode is active, so their presence IS the configuration
++ * arriving at runtime — no build flag and no second endpoint to keep in sync.
++ * localStorage.gamiraIce='0' forces one window back onto the direct path, which is
++ * what comparing the two paths side by side needs.
++ */
++export function isIceEnabled(iceServers?: IceServer[]): boolean {
++    if (!iceServers || iceServers.length === 0) return false;
++    try {
++        return window.localStorage.getItem('gamiraIce') !== '0';
++    } catch {
++        // Storage can be unavailable (private mode); the deployment's choice stands.
++        return true;
++    }
++}
++
++/**
++ * Negotiates the tunnel and patches window.WebSocket so a connection to serverUrl
++ * rides it. Returns a function that removes the patch and closes the tunnel, or
++ * null when no tunnel could be established.
++ *
++ * Returning null is not a failure to handle: the caller connects directly instead. A
++ * relay is a fallback path, so failing to build one must never stop a player who
++ * could have connected anyway.
++ */
++export async function openIceTunnel(opts: {
++    apiBase: string;
++    token: string;
++    sessionId: string;
++    serverUrl: string;
++    iceServers: IceServer[];
++    timeoutMs?: number;
++}): Promise<(() => void) | null> {
++    const { apiBase, token, sessionId, serverUrl, iceServers } = opts;
++    const timeoutMs = opts.timeoutMs ?? 25000;
++
++    const connID = newConnID();
++
++    let pc: RTCPeerConnection;
++    let channel: RTCDataChannel;
++    try {
++        pc = new RTCPeerConnection({
++            iceServers: iceServers.map((s) => ({
++                urls: s.urls,
++                username: s.username || undefined,
++                credential: s.credential || undefined,
++            })),
++        });
++        // Reliable and ordered: this carries what the WebSocket used to, and colyseus
++        // assumes a stream that neither drops nor reorders.
++        channel = pc.createDataChannel('gamira', { ordered: true });
++        channel.binaryType = 'arraybuffer';
++    } catch (err) {
++        // A browser that rejects the ICE server list throws here, synchronously.
++        // Outside the try below that would escape into the caller's own catch and
++        // strand a player who could have connected directly.
++        // eslint-disable-next-line no-console
++        console.warn('ice: cannot build a peer connection, connecting directly:', err);
++        return null;
++    }
++
++    try {
++        const offer = await pc.createOffer();
++        await pc.setLocalDescription(offer);
++        // Wait for gathering rather than trickling: one exchange carrying the
++        // complete description needs no second signaling channel.
++        await gatheringComplete(pc, timeoutMs);
++
++        const answer = await exchange(apiBase, token, sessionId, connID, pc.localDescription!, timeoutMs);
++        await pc.setRemoteDescription(answer);
++        await channelOpen(channel, timeoutMs);
++    } catch (err) {
++        // eslint-disable-next-line no-console
++        console.warn('ice: tunnel unavailable, connecting directly:', err);
++        pc.close();
++        return null;
++    }
++
++    const restore = installWebSocketShim(serverUrl, channel);
++    return () => {
++        restore();
++        try {
++            channel.close();
++        } finally {
++            pc.close();
++        }
++    };
++}
++
++/**
++ * Runs one control-plane request against the game server through gamira, and
++ * returns its parsed JSON.
++ *
++ * The tunnel carries the game server's port and nothing else. colyseus needs a
++ * seat reservation over HTTP before that port accepts a WebSocket, and a client
++ * that cannot reach the game server directly cannot make that call — so it goes
++ * through gamira, which is the endpoint the Cloudflare Tunnel exposes.
++ */
++export async function gameServerControl(
++    apiBase: string,
++    token: string,
++    sessionId: string,
++    path: string,
++    body: unknown,
++): Promise<any> {
++    const resp = await fetch(`${apiBase.replace(/\/$/, '')}/sessions/${sessionId}/gameserver/control`, {
++        method: 'POST',
++        headers: { 'Content-Type': 'application/json', 'x-token': token },
++        body: JSON.stringify({ path, body: JSON.stringify(body) }),
++    });
++    if (!resp.ok) throw new Error(`gameserver/control returned ${resp.status}`);
++    const relayed = await resp.json();
++    // The game server's own status is reported inside the payload, so a relayed
++    // rejection is not mistaken for a successful handshake.
++    if (relayed.status >= 400) {
++        throw new Error(`game server answered ${relayed.status}: ${String(relayed.body).slice(0, 200)}`);
++    }
++    return JSON.parse(relayed.body);
++}
++
++/**
++ * Identifies this tunnel among the ones the same account has open. Every window
++ * of one browser profile shares the login, so keying signaling by player alone
++ * makes two windows negotiate against each other's answer — one gets a tunnel
++ * and the rest fall back. The native ice-proxy sends the same field.
++ */
++function newConnID(): string {
++    const c = window.crypto as Crypto & { randomUUID?: () => string };
++    if (c?.randomUUID) return c.randomUUID();
++    const b = new Uint8Array(16);
++    window.crypto.getRandomValues(b);
++    return Array.from(b, (x) => x.toString(16).padStart(2, '0')).join('');
++}
++
++/** POSTs the offer to gamira and returns the sidecar's answer. */
++async function exchange(
++    apiBase: string,
++    token: string,
++    sessionId: string,
++    connID: string,
++    local: RTCSessionDescription,
++    timeoutMs: number,
++): Promise<RTCSessionDescriptionInit> {
++    const controller = new AbortController();
++    const timer = setTimeout(() => controller.abort(), timeoutMs + 5000);
++    try {
++        // Base64-wrapped JSON, matching what the Go proxies exchange, so both client
++        // kinds negotiate against one sidecar implementation.
++        const blob = btoa(JSON.stringify({ type: local.type, sdp: local.sdp }));
++        const resp = await fetch(`${apiBase.replace(/\/$/, '')}/sessions/${sessionId}/ice/offer`, {
++            method: 'POST',
++            headers: { 'Content-Type': 'application/json', 'x-token': token },
++            body: JSON.stringify({ offer: blob, conn_id: connID }),
++            signal: controller.signal,
++        });
++        if (!resp.ok) throw new Error(`ice/offer returned ${resp.status}`);
++        const { answer } = await resp.json();
++        if (!answer) throw new Error('gamira returned an empty ICE answer');
++        return JSON.parse(atob(answer));
++    } finally {
++        clearTimeout(timer);
++    }
++}
++
++function gatheringComplete(pc: RTCPeerConnection, timeoutMs: number): Promise<void> {
++    if (pc.iceGatheringState === 'complete') return Promise.resolve();
++    return new Promise((resolve, reject) => {
++        const timer = setTimeout(() => reject(new Error('ICE gathering timed out')), timeoutMs);
++        pc.addEventListener('icegatheringstatechange', function onChange() {
++            if (pc.iceGatheringState === 'complete') {
++                clearTimeout(timer);
++                pc.removeEventListener('icegatheringstatechange', onChange);
++                resolve();
++            }
++        });
++    });
++}
++
++function channelOpen(channel: RTCDataChannel, timeoutMs: number): Promise<void> {
++    if (channel.readyState === 'open') return Promise.resolve();
++    return new Promise((resolve, reject) => {
++        const timer = setTimeout(() => reject(new Error('data channel did not open')), timeoutMs);
++        channel.onopen = () => {
++            clearTimeout(timer);
++            resolve();
++        };
++        channel.onerror = () => {
++            clearTimeout(timer);
++            reject(new Error('data channel failed'));
++        };
++    });
++}
++
++/**
++ * Replaces window.WebSocket with one that returns a DataChannel-backed socket for
++ * serverUrl and the real thing for anything else. Returns a restore function; the
++ * patch is deliberately narrow and short-lived so nothing else in the page changes
++ * behaviour while a match is running.
++ */
++function installWebSocketShim(serverUrl: string, channel: RTCDataChannel): () => void {
++    const RealWebSocket = window.WebSocket;
++    const host = hostOf(serverUrl);
++
++    function PatchedWebSocket(this: any, url: string, protocols?: string | string[]) {
++        if (hostOf(url) === host) {
++            return new DataChannelSocket(channel, url) as any;
++        }
++        return new RealWebSocket(url, protocols as any);
++    }
++    PatchedWebSocket.prototype = RealWebSocket.prototype;
++    (PatchedWebSocket as any).CONNECTING = RealWebSocket.CONNECTING;
++    (PatchedWebSocket as any).OPEN = RealWebSocket.OPEN;
++    (PatchedWebSocket as any).CLOSING = RealWebSocket.CLOSING;
++    (PatchedWebSocket as any).CLOSED = RealWebSocket.CLOSED;
++
++    (window as any).WebSocket = PatchedWebSocket;
++    return () => {
++        (window as any).WebSocket = RealWebSocket;
++    };
++}
++
++function hostOf(url: string): string {
++    try {
++        return new URL(url.replace(/^ws/, 'http')).host;
++    } catch {
++        return url;
++    }
++}
++
++/**
++ * The subset of the WebSocket API colyseus.js uses, backed by a data channel:
++ * binaryType, readyState, the four handler properties, send and close. Enough for
++ * colyseus's transport, and not a general-purpose WebSocket.
++ */
++class DataChannelSocket {
++    static readonly CONNECTING = 0;
++    static readonly OPEN = 1;
++    static readonly CLOSING = 2;
++    static readonly CLOSED = 3;
++
++    binaryType: BinaryType = 'arraybuffer';
++    onopen: ((ev: any) => void) | null = null;
++    onmessage: ((ev: any) => void) | null = null;
++    onclose: ((ev: any) => void) | null = null;
++    onerror: ((ev: any) => void) | null = null;
++
++    readonly url: string;
++    readonly protocol = '';
++
++    private readonly channel: RTCDataChannel;
++
++    constructor(channel: RTCDataChannel, url: string) {
++        this.channel = channel;
++        this.url = url;
++        channel.binaryType = 'arraybuffer';
++        channel.onmessage = (ev) => this.onmessage?.({ data: ev.data });
++        channel.onclose = () => this.onclose?.({ code: 1000, reason: 'data channel closed', wasClean: true });
++        channel.onerror = (ev) => this.onerror?.(ev);
++        // The tunnel is already up by the time this is constructed, but colyseus
++        // attaches its handler after construction — so announce on the next tick
++        // rather than synchronously, or the open event is missed.
++        setTimeout(() => this.onopen?.({}), 0);
++    }
++
++    get readyState(): number {
++        switch (this.channel.readyState) {
++            case 'connecting':
++                return DataChannelSocket.CONNECTING;
++            case 'open':
++                return DataChannelSocket.OPEN;
++            case 'closing':
++                return DataChannelSocket.CLOSING;
++            default:
++                return DataChannelSocket.CLOSED;
++        }
++    }
++
++    send(data: ArrayBufferLike | ArrayBufferView | string): void {
++        if (this.channel.readyState !== 'open') return;
++        this.channel.send(data as any);
++    }
++
++    close(): void {
++        this.channel.close();
++    }
++
++    addEventListener(type: string, listener: (ev: any) => void): void {
++        if (type === 'open') this.onopen = listener;
++        else if (type === 'message') this.onmessage = listener;
++        else if (type === 'close') this.onclose = listener;
++        else if (type === 'error') this.onerror = listener;
++    }
++
++    removeEventListener(type: string): void {
++        if (type === 'open') this.onopen = null;
++        else if (type === 'message') this.onmessage = null;
++        else if (type === 'close') this.onclose = null;
++        else if (type === 'error') this.onerror = null;
++    }
++}
++
++export { GAMIRA_API } from './clientConfig';
+diff --git a/TOSIOS/packages/client/src/screens/Game/Game.tsx b/TOSIOS/packages/client/src/screens/Game/Game.tsx
+index a1557d647df07ebe478227c57550c703302e1200..1a0a70b67bf2884bcf80e04de226ae6889b6f245 100644
+--- a/TOSIOS/packages/client/src/screens/Game/Game.tsx
++++ b/TOSIOS/packages/client/src/screens/Game/Game.tsx
+@@ -1,6 +1,8 @@
+ import { RouteComponentProps } from '@reach/router';
+ import { Constants, Models, Types } from '@tosios/common';
+ import { Client, Room } from 'colyseus.js';
++import { getToken } from '../../api/authClient';
++import { GAMIRA_API, gameServerControl, isIceEnabled, openIceTunnel } from '../../api/iceTunnel';
+ import qs from 'querystringify';
+ import React, { useEffect, useRef, useState } from 'react';
+ import { isMobile } from 'react-device-detect';
+@@ -38,6 +40,8 @@ export function GameScreen({ navigate, location, roomId }: GameScreenProps) {
+     const gameRef = useRef<Game>();
+     const roomRef = useRef<Room>();
+     const intervalRef = useRef<NodeJS.Timeout | null>(null);
++    // Closes the optional NAT-traversal tunnel; null on the default direct path.
++    const iceCloseRef = useRef<(() => void) | null>(null);
+ 
+     //
+     // Lifecycle
+@@ -74,23 +78,92 @@ export function GameScreen({ navigate, location, roomId }: GameScreenProps) {
+             };
+         }
+ 
+-        // Connect
++        // Connect — serverUrl in location.state means we came from Gamira matchmaking.
++        const serverUrl: string | undefined = (location as any)?.state?.serverUrl;
++        let url = '';
+         try {
+-            const host = window.document.location.host.replace(/:.*/, '');
+-            const port = process.env.NODE_ENV !== 'production' ? Constants.WS_PORT : window.location.port;
+-            const url = `${window.location.protocol.replace('http', 'ws')}//${host}${port ? `:${port}` : ''}`;
++            url =
++                serverUrl ||
++                (() => {
++                    const host = window.document.location.host.replace(/:.*/, '');
++                    const port =
++                        process.env.NODE_ENV !== 'production' ? Constants.WS_PORT : window.location.port;
++                    return `${window.location.protocol.replace('http', 'ws')}//${host}${port ? `:${port}` : ''}`;
++                })();
++
++            // Optional NAT traversal, only when the session advertises ice_servers
++            // (i.e. the deployment runs a TURN mode). Otherwise this is skipped
++            // entirely and the Client below opens its normal WebSocket. A tunnel that
++            // cannot be built also falls through to the direct connection.
++            const iceServers = (location as any)?.state?.iceServers;
++            const sessionId = (location as any)?.state?.sessionId;
++            const token = getToken();
++            if (serverUrl && sessionId && token && isIceEnabled(iceServers)) {
++                iceCloseRef.current = await openIceTunnel({
++                    apiBase: GAMIRA_API,
++                    token,
++                    sessionId,
++                    serverUrl: url,
++                    iceServers,
++                });
++            }
+ 
+             clientRef.current = new Client(url);
+-            if (isNewRoom) {
++            if (serverUrl) {
++                // Gamira flow: all matched players connect to same Agones server.
++                const playerName =
++                    (location as any)?.state?.playerName || localStorage.getItem('playerName') || '';
++                const roomOptions = {
++                    playerName,
++                    roomName: 'Gamira Match',
++                    roomMap: Constants.MAPS_NAMES[0],
++                    roomMaxPlayers: Constants.ROOM_PLAYERS_MAX,
++                    mode: Constants.GAME_MODES[0],
++                };
++                if (iceCloseRef.current) {
++                    // Tunnelled: colyseus' own joinOrCreate would post the seat
++                    // reservation straight at the game server, which is the one thing
++                    // a tunnelled client cannot reach. Get it through gamira, then let
++                    // colyseus open the room socket — that rides the tunnel via the
++                    // WebSocket shim.
++                    try {
++                        const reservation = await gameServerControl(
++                            GAMIRA_API,
++                            token!,
++                            sessionId,
++                            `/matchmake/joinOrCreate/${Constants.ROOM_NAME}`,
++                            roomOptions,
++                        );
++                        roomRef.current = await clientRef.current.consumeSeatReservation(reservation);
++                    } catch (err) {
++                        // The relay is part of the tunnel, so losing it is the same kind
++                        // of failure as never building one: drop the tunnel (which also
++                        // restores window.WebSocket) and connect the way an untunnelled
++                        // client does. A gamira too old to serve the relay answers 404,
++                        // and lands here too.
++                        // eslint-disable-next-line no-console
++                        console.warn('ice: tunnelled join failed, connecting directly:', err);
++                        iceCloseRef.current();
++                        iceCloseRef.current = null;
++                        roomRef.current = await clientRef.current.joinOrCreate(Constants.ROOM_NAME, roomOptions);
++                    }
++                } else {
++                    roomRef.current = await clientRef.current.joinOrCreate(Constants.ROOM_NAME, roomOptions);
++                }
++            } else if (isNewRoom) {
+                 roomRef.current = await clientRef.current.create(Constants.ROOM_NAME, options);
+-
+-                // We replace the "new" in the URL with the room's id
+                 window.history.replaceState(null, '', `/${roomRef.current.id}`);
+             } else {
+                 roomRef.current = await clientRef.current.joinById(roomId, options);
+             }
+         } catch (error) {
+-            navigate('/');
++            // Bouncing back to the menu with nothing logged makes a failed connect
++            // indistinguishable from a misclick — the server logs cannot see it either,
++            // so carry the reason to the screen the player lands on.
++            const reason = error instanceof Error ? `${error.name}: ${error.message}` : String(error);
++            // eslint-disable-next-line no-console
++            console.error('game: could not join the match server:', error);
++            navigate('/', { state: { error: `Could not join the match server (${url}): ${reason}` } });
+             return;
+         }
+ 
+@@ -131,6 +204,13 @@ export function GameScreen({ navigate, location, roomId }: GameScreenProps) {
+             roomRef.current.leave();
+         }
+ 
++        // The tunnel exists for one connection: leaving it open would hold a relay
++        // allocation, and leave window.WebSocket patched for the rest of the page.
++        if (iceCloseRef.current) {
++            iceCloseRef.current();
++            iceCloseRef.current = null;
++        }
++
+         // Game
+         gameRef.current.stop();
+ 
+diff --git a/TOSIOS/packages/client/src/screens/Home/Home.tsx b/TOSIOS/packages/client/src/screens/Home/Home.tsx
+index 6614ebe7141146dbaae39cef9b3cb19d54e57a1f..5953836f779c27fae8441af85f8340bd4170a1dc 100644
+--- a/TOSIOS/packages/client/src/screens/Home/Home.tsx
++++ b/TOSIOS/packages/client/src/screens/Home/Home.tsx
+@@ -1,79 +1,136 @@
+ import { RouteComponentProps } from '@reach/router';
+-import { Constants, Types } from '@tosios/common';
+-import { GameMode } from '@tosios/common/src/types';
+-import { Client } from 'colyseus.js';
+-import { RoomAvailable } from 'colyseus.js/lib/Room';
+-import qs from 'querystringify';
+ import React, { useEffect, useRef, useState } from 'react';
+-import { Box, Separator, Space, View } from '../../components';
++import { getToken, logout, signIn, tryGetToken, waitForOtherTab } from '../../api/authClient';
++import { bootstrapPlayer, cancelTicket, createTicket, pollUntilMatched } from '../../api/gamiraClient';
++import { Button, Space, View } from '../../components';
+ import { Footer } from './components/Footer';
+ import { Header } from './components/Header';
+ import { NameField } from './components/NameField';
+-import { NewGameField } from './components/NewGameField';
+-import { RoomsList } from './components/RoomsList';
+ 
+ interface HomeScreenProps extends RouteComponentProps {}
+ 
+-export function HomeScreen({ navigate }: HomeScreenProps) {
+-    const [rooms, setRooms] = useState<Array<RoomAvailable<any>>>([]);
+-    const clientRef = useRef<Client>();
+-    const intervalRef = useRef<NodeJS.Timeout | null>(null);
++type AuthState = 'loading' | 'unauthenticated' | 'authenticated' | 'redirecting';
++type MatchState = 'idle' | 'queued' | 'error';
++
++export function HomeScreen({ navigate, location }: HomeScreenProps) {
++    const [authState, setAuthState] = useState<AuthState>('loading');
++    // A failed connect sends the player back here; without carrying the reason the
++    // screen looks like nothing happened, which is indistinguishable from a misclick.
++    const returnedError: string = (location as any)?.state?.error || '';
++    const [matchState, setMatchState] = useState<MatchState>(returnedError ? 'error' : 'idle');
++    const [errorMsg, setErrorMsg] = useState(returnedError);
++    const [ticketId, setTicketId] = useState<string | null>(null);
++    const started = useRef(false);
+ 
+-    //
+-    // Lifecycle
+-    //
+     useEffect(() => {
+-        try {
+-            const host = window.document.location.host.replace(/:.*/, '');
+-            const port = process.env.NODE_ENV !== 'production' ? Constants.WS_PORT : window.location.port;
+-            const url = `${window.location.protocol.replace('http', 'ws')}//${host}${port ? `:${port}` : ''}`;
++        if (started.current) return;
++        started.current = true;
++        (async () => {
++            let token = await tryGetToken();
++            if (!token) {
++                token = await waitForOtherTab();
++            }
++            if (!token) {
++                setAuthState('unauthenticated');
++                return;
++            }
++            await bootstrapPlayer(token).catch(() => {});
++            setAuthState('authenticated');
++        })();
++    }, []);
+ 
+-            clientRef.current = new Client(url);
+-            intervalRef.current = setInterval(updateRooms, Constants.ROOM_REFRESH);
++    useEffect(() => {
++        const onStorage = (e: StorageEvent) => {
++            if (e.key === 'x-token' && e.newValue && authState !== 'authenticated') {
++                window.location.reload();
++            }
++            if (e.key === 'x-token' && !e.newValue && authState === 'authenticated') {
++                window.location.reload();
++            }
++        };
++        window.addEventListener('storage', onStorage);
++        return () => window.removeEventListener('storage', onStorage);
++    }, [authState]);
+ 
+-            updateRooms();
+-        } catch (error) {
+-            console.error(error);
+-        }
++    async function handleSignIn() {
++        setAuthState('redirecting');
++        await signIn();
++    }
+ 
++    useEffect(() => {
+         return () => {
+-            if (intervalRef.current) {
+-                clearInterval(intervalRef.current);
+-            }
++            const token = getToken();
++            const pending = sessionStorage.getItem('ticket-id');
++            if (token && pending) cancelTicket(token, pending).catch(() => {});
+         };
+     }, []);
+ 
+-    //
+-    // Utils
+-    //
+-    async function updateRooms() {
+-        if (!clientRef.current) {
+-            return;
++    async function handleFindMatch() {
++        const token = getToken();
++        if (!token) return;
++        setMatchState('queued');
++        setErrorMsg('');
++        try {
++            const ticket = await createTicket(token);
++            setTicketId(ticket.ticket_id);
++            sessionStorage.setItem('ticket-id', ticket.ticket_id);
++            const matched = await pollUntilMatched(token, ticket.ticket_id);
++            sessionStorage.removeItem('ticket-id');
++            const { ip, port } = matched.connection!;
++            const serverUrl = `ws://${ip}:${port}`;
++            const playerName = sessionStorage.getItem('playerName') || '';
++            navigate!('/new', {
++                state: {
++                    serverUrl,
++                    playerName,
++                    sessionId: matched.session_id,
++                    // Forwarded for the optional NAT-traversal tunnel; ignored unless
++                    // it is enabled (see iceTunnel.isIceEnabled).
++                    iceServers: matched.connection!.ice_servers,
++                },
++            });
++        } catch (err: any) {
++            sessionStorage.removeItem('ticket-id');
++            setMatchState('error');
++            setErrorMsg(err.message || 'Matchmaking failed');
++            setTicketId(null);
+         }
+-
+-        const rooms = await clientRef.current.getAvailableRooms(Constants.ROOM_NAME);
+-        setRooms(rooms);
+     }
+ 
+-    //
+-    // Handlers
+-    //
+-    function handleRoomCreate(name: string, maxPlayers: number, map: string, mode: GameMode) {
+-        const playerName = localStorage.getItem('playerName') || '';
++    async function handleCancel() {
++        const token = getToken();
++        if (token && ticketId) await cancelTicket(token, ticketId).catch(() => {});
++        sessionStorage.removeItem('ticket-id');
++        setMatchState('idle');
++        setTicketId(null);
++    }
+ 
+-        const options: Types.RoomOptions = {
+-            playerName,
+-            roomName: name,
+-            roomMap: map,
+-            roomMaxPlayers: maxPlayers,
+-            mode,
+-        };
++    if (authState === 'loading') {
++        return (
++            <View flex center>
++                <span>Loading...</span>
++            </View>
++        );
++    }
+ 
+-        navigate(`/new${qs.stringify(options, true)}`);
++    if (authState === 'redirecting') {
++        return (
++            <View flex center>
++                <span>Redirecting to GitHub...</span>
++            </View>
++        );
+     }
+ 
+-    function handleRoomClick(roomId: string) {
+-        navigate(`/${roomId}`);
++    if (authState === 'unauthenticated') {
++        return (
++            <View flex center style={{ padding: 32, flexDirection: 'column' }}>
++                <Header />
++                <Space size="m" />
++                <Button title="Sign in with GitHub" text="Sign In" onClick={handleSignIn} />
++                <Space size="m" />
++                <Footer />
++            </View>
++        );
+     }
+ 
+     return (
+@@ -89,19 +146,25 @@ export function HomeScreen({ navigate }: HomeScreenProps) {
+             <Space size="m" />
+             <NameField />
+             <Space size="m" />
+-            <Box
+-                style={{
+-                    width: 500,
+-                    maxWidth: '100%',
+-                }}
+-            >
+-                <NewGameField onCreate={handleRoomCreate} />
+-                <Space size="xxs" />
+-                <Separator />
+-                <Space size="xxs" />
+-                <RoomsList rooms={rooms} onRoomClick={handleRoomClick} />
+-                <Space size="xxs" />
+-            </Box>
++            {matchState === 'idle' && (
++                <Button title="Find a match" text="Find Match" onClick={handleFindMatch} />
++            )}
++            {matchState === 'queued' && (
++                <View style={{ flexDirection: 'column', alignItems: 'center' }}>
++                    <span>Finding match...</span>
++                    <Space size="s" />
++                    <Button title="Cancel matchmaking" text="Cancel" reversed onClick={handleCancel} />
++                </View>
++            )}
++            {matchState === 'error' && (
++                <View style={{ flexDirection: 'column', alignItems: 'center' }}>
++                    <span style={{ color: 'red' }}>{errorMsg}</span>
++                    <Space size="s" />
++                    <Button title="Retry matchmaking" text="Retry" onClick={() => setMatchState('idle')} />
++                </View>
++            )}
++            <Space size="m" />
++            <Button title="Sign out" text="Logout" reversed onClick={logout} />
+             <Space size="m" />
+             <Footer />
+         </View>
+diff --git a/TOSIOS/packages/client/src/screens/Home/components/NameField.tsx b/TOSIOS/packages/client/src/screens/Home/components/NameField.tsx
+index dc42eff8d62b9e56e8a8dc4083781ba04d74c341..92b096cb3632457296d1981df9f08bbcc1c1d2fb 100644
+--- a/TOSIOS/packages/client/src/screens/Home/components/NameField.tsx
++++ b/TOSIOS/packages/client/src/screens/Home/components/NameField.tsx
+@@ -3,10 +3,29 @@ import React, { useState } from 'react';
+ import { Box, Button, Inline, Input, Space, Text, View } from '../../../components';
+ import { playerImage } from '../../../images';
+ 
++const ADJECTIVES = ['Brave', 'Swift', 'Sneaky', 'Lucky', 'Wild', 'Mighty', 'Sly', 'Bold', 'Quick', 'Fierce'];
++const NOUNS = ['Tiger', 'Wolf', 'Fox', 'Hawk', 'Bear', 'Lion', 'Otter', 'Raven', 'Panda', 'Falcon'];
++
++function generateName(): string {
++    const a = ADJECTIVES[Math.floor(Math.random() * ADJECTIVES.length)];
++    const n = NOUNS[Math.floor(Math.random() * NOUNS.length)];
++    const num = Math.floor(Math.random() * 1000);
++    return `${a}${n}${num}`.slice(0, Constants.PLAYER_NAME_MAX);
++}
++
++function initialName(): string {
++    let n = sessionStorage.getItem('playerName');
++    if (!n) {
++        n = generateName();
++        sessionStorage.setItem('playerName', n);
++    }
++    return n;
++}
++
+ interface NameFieldProps {}
+ 
+ export function NameField({}: NameFieldProps) {
+-    const [name, setName] = useState(localStorage.getItem('playerName') || '');
++    const [name, setName] = useState(initialName);
+     const [changed, setChanged] = useState(false);
+ 
+     function handleChange(event: any) {
+@@ -15,7 +34,7 @@ export function NameField({}: NameFieldProps) {
+     }
+ 
+     function handleSave() {
+-        localStorage.setItem('playerName', name);
++        sessionStorage.setItem('playerName', name);
+         setChanged(false);
+     }
+ 
+diff --git a/TOSIOS/scripts/build-client.ts b/TOSIOS/scripts/build-client.ts
+new file mode 100644
+index 0000000000000000000000000000000000000000..3198eb53f2da513fa5ff23bd80e2171c353655b6
+--- /dev/null
++++ b/TOSIOS/scripts/build-client.ts
+@@ -0,0 +1,48 @@
++import { build } from 'esbuild';
++import svgrPlugin from 'esbuild-plugin-svgr';
++
++type Environment = 'production' | 'development';
++
++const BUILD_MODE = (process.env.BUILD_MODE as Environment) || 'development';
++if (!BUILD_MODE || !['production', 'development'].includes(BUILD_MODE)) {
++    throw new Error(`[Build] Cannot build with provided environment "${BUILD_MODE}".`);
++}
++
++/**
++ * A builder function for the client package.
++ */
++export async function buildClient() {
++    console.log('[Build] Building client...');
++
++    await build({
++        entryPoints: ['packages/client/src/index.tsx'],
++        outfile: 'packages/client/public/script.js',
++        define: {
++            'process.env.NODE_ENV': JSON.stringify(BUILD_MODE),
++        },
++        assetNames: 'assets/[name]-[hash]',
++        loader: {
++            '.png': 'file',
++            '.ogg': 'file',
++            '.svg': 'file',
++            '.ico': 'file',
++        },
++        bundle: true,
++        minify: BUILD_MODE === 'production',
++        sourcemap: BUILD_MODE === 'development',
++        plugins: [svgrPlugin()],
++        watch:
++            BUILD_MODE === 'production'
++                ? false
++                : {
++                      onRebuild: (error, result) => {
++                          console.log(`[Client] Build finished at ${new Date().toISOString()}`);
++                      },
++                  },
++    });
++
++    console.log('[Build] Client built...');
++}
++
++
++buildClient().catch((error) => { console.error(error); process.exit(1); });

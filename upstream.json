@@ -1,0 +1,707 @@
+{
+  "format": 1,
+  "scope": "client-only",
+  "demo": "web",
+  "url": "https://github.com/halftheopposite/TOSIOS.git",
+  "commit": "98de136e524d25c5877adc9523c9445bc2b4a262",
+  "prefix": "TOSIOS",
+  "subdir": "",
+  "patch_sha256": "921cce20e397f0da386f9c857840adca7277524a1ad8b672c0fae7d2552d6b34",
+  "verified": true,
+  "sanitized": [],
+  "removed": [],
+  "files": {
+    "TOSIOS/.gitignore": {
+      "sha256": "0fecf2a22036ff4b6cc807e26222f577c5c732be9a3cb941eaac0df2b9f5164f",
+      "executable": true
+    },
+    "TOSIOS/LICENSE": {
+      "sha256": "74e69fadedc826add5ba6f5103ebc30452522dee57622031ef00172b03d97575",
+      "executable": false
+    },
+    "TOSIOS/README.md": {
+      "sha256": "d0e4ade7f7cf028fe99c02f888bd7f05e8204f71dcb2f6f7b8636c85bf23bd70",
+      "executable": false
+    },
+    "TOSIOS/package.json": {
+      "sha256": "38ea26c1389ae93da20bd343e8491704de8b9fecd811f096a20e0161216efdd9",
+      "executable": false
+    },
+    "TOSIOS/packages/client/package.json": {
+      "sha256": "5613eaa98b6adc703a90e3816f98d42006fdd68b997e229fbe56bd6487acf7ee",
+      "executable": false
+    },
+    "TOSIOS/packages/client/public/banner.jpg": {
+      "sha256": "c568a8161d59fd7cb2c19fc1c0c130d9113d1cef4e3d1cb81abfb833d5f930d9",
+      "executable": false
+    },
+    "TOSIOS/packages/client/public/client-config.js": {
+      "sha256": "dee12844fbd51049136c7f463ab4af35207220eb98c92a027864fb57f8a2099d",
+      "executable": false
+    },
+    "TOSIOS/packages/client/public/favicon.ico": {
+      "sha256": "7ab297946fda11c4b824cc559abbdb223849253abf72948d45fe249878fabf5b",
+      "executable": false
+    },
+    "TOSIOS/packages/client/public/index.html": {
+      "sha256": "09fe12aac148572c5ff6c99b9162d936f8ea201fb4d51b3b49b441ceac431d82",
+      "executable": true
+    },
+    "TOSIOS/packages/client/public/manifest.json": {
+      "sha256": "728409ef346048cb3780dcf8633e925d942eac687f3dbba29e497c1bf82c8450",
+      "executable": true
+    },
+    "TOSIOS/packages/client/public/robots.txt": {
+      "sha256": "e5c4b84484ee4216e9373be99380320c25dd94805f99f0a805846f087636553f",
+      "executable": false
+    },
+    "TOSIOS/packages/client/src/App.tsx": {
+      "sha256": "29c23e3dd2b01fcc199393da14164a91cb0dba4e2846f8ed9415c17ff4e563c3",
+      "executable": true
+    },
+    "TOSIOS/packages/client/src/api/authClient.ts": {
+      "sha256": "f57fc658001d94413ebbce613eb4d8f433f5362ba63095b40281deaef0858398",
+      "executable": false
+    },
+    "TOSIOS/packages/client/src/api/clientConfig.ts": {
+      "sha256": "5a87f75738ea30d9672d1ed1d27d750bad331beb487759a3929ac9a431673bfa",
+      "executable": false
+    },
+    "TOSIOS/packages/client/src/api/gamiraClient.ts": {
+      "sha256": "ea4f73316abb8144f62d82a6c033258ccd0d61428273690634ea05abf51de457",
+      "executable": false
+    },
+    "TOSIOS/packages/client/src/api/iceTunnel.ts": {
+      "sha256": "1fe5396ad96c03dbe8c4ba7646966641f9a68dac9ad27b32d1d4e05e89430f98",
+      "executable": false
+    },
+    "TOSIOS/packages/client/src/components/Box.tsx": {
+      "sha256": "4dc1cdc01808a92858cc8c6dba2c354ad64c1f5061090a3ff15d36308a43cc63",
+      "executable": false
+    },
+    "TOSIOS/packages/client/src/components/Button.tsx": {
+      "sha256": "fb0df4325eeeadf753eb16fc6b27965589109d158477d3f26d8f4f830ad419b1",
+      "executable": false
+    },
+    "TOSIOS/packages/client/src/components/Inline.tsx": {
+      "sha256": "7f875d395ae06d53c223f3e89a1c5e329d77ceddbc18033547bee3c08003b4e9",
+      "executable": false
+    },
+    "TOSIOS/packages/client/src/components/Input.tsx": {
+      "sha256": "fe977c80ffc70dfe6d8f6608e36af3ae93d7c031cb431307ff8da0cbe6773213",
+      "executable": false
+    },
+    "TOSIOS/packages/client/src/components/KeyboardKey.tsx": {
+      "sha256": "e7fba9cd37455289939c05a9d1dcb8ef2440fc6d957d348d84f2d5892b79447a",
+      "executable": false
+    },
+    "TOSIOS/packages/client/src/components/Room.tsx": {
+      "sha256": "27cee01362bcc0385edd85ea8589c0d78b0684eb5ef143bd3fe5ffd71e8b1d00",
+      "executable": false
+    },
+    "TOSIOS/packages/client/src/components/Select.tsx": {
+      "sha256": "b67d1d6cbaaa70792db7519125be860ee4b0edf5a15ae3afdb9a2097aa6b0120",
+      "executable": false
+    },
+    "TOSIOS/packages/client/src/components/Separator.tsx": {
+      "sha256": "0da8daee4d73d48ad4a9618fcf19d6b744b2aaae79d32c65bf06e93d39107231",
+      "executable": false
+    },
+    "TOSIOS/packages/client/src/components/Space.tsx": {
+      "sha256": "2c88f79bc709eea9353dde62528f0f32e2a7ac918c0b209551ca7e2be0709cf0",
+      "executable": false
+    },
+    "TOSIOS/packages/client/src/components/Table.tsx": {
+      "sha256": "1d3f3287805f1e1980f77b5843fe748492a23b40c6f94ad126ffb6856761e71c",
+      "executable": false
+    },
+    "TOSIOS/packages/client/src/components/Text.tsx": {
+      "sha256": "d4c1c676bb29cf4c2802e5d1055047374a20fc3fc5a4efc36f051851329461c6",
+      "executable": false
+    },
+    "TOSIOS/packages/client/src/components/View.tsx": {
+      "sha256": "63e746e89d91f315e0eaedc3d563cd1cba33235ab010a07cc54080059319a10e",
+      "executable": false
+    },
+    "TOSIOS/packages/client/src/components/index.ts": {
+      "sha256": "9784b49798a4326dc77fa9b664cecdf19819a62f861b32e24eb2954b42126906",
+      "executable": false
+    },
+    "TOSIOS/packages/client/src/declare.d.ts": {
+      "sha256": "28f7084f6cf63b2beff0ea6d4a9738efd2db40c5cbab625322a77fa16925f615",
+      "executable": false
+    },
+    "TOSIOS/packages/client/src/game/Game.ts": {
+      "sha256": "873342069331b7ea54ed1b1f98bd167e8945ede79aa694149f1b1b1b435110fd",
+      "executable": false
+    },
+    "TOSIOS/packages/client/src/game/assets/images/gui/crosshair.ico": {
+      "sha256": "fdacd34e54894ac8e22a2ca59bb7191eda0253d10e298ff7c1ff70c1860bb966",
+      "executable": false
+    },
+    "TOSIOS/packages/client/src/game/assets/images/gui/heart-empty.png": {
+      "sha256": "1308cd154f306d44e5d5ca416d50298070d6808c9ddb31bffb3d92c5d3050874",
+      "executable": false
+    },
+    "TOSIOS/packages/client/src/game/assets/images/gui/heart-full.png": {
+      "sha256": "0b9bcaf3548422c156d4e17d1176313ccc75e9da44f0a08d1a79ae424540db0b",
+      "executable": false
+    },
+    "TOSIOS/packages/client/src/game/assets/images/gui/index.ts": {
+      "sha256": "1f54d5cf1161cdaf9cca36baa4fc5ef7df74a24d0f5eac8e4322f9f4b6fbb134",
+      "executable": false
+    },
+    "TOSIOS/packages/client/src/game/assets/images/index.ts": {
+      "sha256": "75e9ffe74c3b752d7e0f57b0249b4e1bc4bff2b6f5bc346d1b19430a5167b2b0",
+      "executable": false
+    },
+    "TOSIOS/packages/client/src/game/assets/images/maps/dungeon.png": {
+      "sha256": "3596d2aa0d5c32adcd4585ca3da9e284879ac9a8c7de011f96e69a9e3d757ba2",
+      "executable": false
+    },
+    "TOSIOS/packages/client/src/game/assets/images/maps/index.ts": {
+      "sha256": "7cd4221aa494d70d1bcb2321fd3adf963eea0d20cb9593229df6f8bac14a9a1c",
+      "executable": false
+    },
+    "TOSIOS/packages/client/src/game/assets/images/monsters/bat-1.png": {
+      "sha256": "bb77ceb3862aa9079679c958c211a4e9341e59758dac24d91335a42cf98b506a",
+      "executable": true
+    },
+    "TOSIOS/packages/client/src/game/assets/images/monsters/bat-2.png": {
+      "sha256": "8be9c3ce4f7e425424db5220f2c2a8b1e92e463e0de019ffd1eaa3ebc4ee705a",
+      "executable": true
+    },
+    "TOSIOS/packages/client/src/game/assets/images/monsters/bat-3.png": {
+      "sha256": "79d1f017bb27f05866a47c080cf68cddf0ab0171a9217a54d23143c819b1ad87",
+      "executable": true
+    },
+    "TOSIOS/packages/client/src/game/assets/images/monsters/bat-4.png": {
+      "sha256": "0c0e2a31cee67a0d20355936a9490afb726c9a4c943f717e087329ef9c379ccb",
+      "executable": true
+    },
+    "TOSIOS/packages/client/src/game/assets/images/monsters/index.ts": {
+      "sha256": "a78391501ff8c7ad20104e3868f2cd099e3d0a12cbfc5adf5063a6f26b5f0938",
+      "executable": false
+    },
+    "TOSIOS/packages/client/src/game/assets/images/player/index.ts": {
+      "sha256": "d6dc06f4b6d966a6e343eae6240ff3ea2b79fe42f8fd9850899e98eec3b488fe",
+      "executable": false
+    },
+    "TOSIOS/packages/client/src/game/assets/images/player/player-dead-1.png": {
+      "sha256": "01e0faab84c338bfe4a032e9c8b1c42cf72b801078c5a27e7ffc818d1e91e4cd",
+      "executable": true
+    },
+    "TOSIOS/packages/client/src/game/assets/images/player/player-dead-2.png": {
+      "sha256": "65abf07e73118b7eab30d2c6dd69e814f938aaeaf991dc238e6e55e50cc908b3",
+      "executable": true
+    },
+    "TOSIOS/packages/client/src/game/assets/images/player/player-dead-3.png": {
+      "sha256": "03404811350588740dada80b5603abb006e93a6d3b010d3986f7ed6c9774c7fd",
+      "executable": true
+    },
+    "TOSIOS/packages/client/src/game/assets/images/player/player-dead-4.png": {
+      "sha256": "68154b1cf6d33f3da712aa1aa9016bca9d83ef4315c80dc8ac3770df9a017961",
+      "executable": true
+    },
+    "TOSIOS/packages/client/src/game/assets/images/player/player-idle-1.png": {
+      "sha256": "6bebd72538ad847acbffc4181f2318d81da333493bfb605d4ae8d16571ed8641",
+      "executable": false
+    },
+    "TOSIOS/packages/client/src/game/assets/images/player/player-idle-2.png": {
+      "sha256": "fd524712994475fc87a92d7e2d1db411457b184c3ad9d75e92292aa8f63db04d",
+      "executable": false
+    },
+    "TOSIOS/packages/client/src/game/assets/images/player/player-idle-3.png": {
+      "sha256": "0fb59d5cdd65d1066828ab8f0b13221cb9f1adaa39014d896f4901cbcc4c8ab5",
+      "executable": false
+    },
+    "TOSIOS/packages/client/src/game/assets/images/player/player-idle-4.png": {
+      "sha256": "17b83751b7682164fd2f30f3924eb7565a070507924efa2c28052e04e6bbc592",
+      "executable": false
+    },
+    "TOSIOS/packages/client/src/game/assets/images/prop/index.ts": {
+      "sha256": "5747852467a096c3947caa208a99db4630a2f4e37fd244d2e440c78f40c94dd7",
+      "executable": false
+    },
+    "TOSIOS/packages/client/src/game/assets/images/prop/potion-red-1.png": {
+      "sha256": "6a7003b1e2dcab5ea4c1db94504c0eeb400e608fa28b2d213e48286df788ec28",
+      "executable": true
+    },
+    "TOSIOS/packages/client/src/game/assets/images/prop/potion-red-2.png": {
+      "sha256": "d51ea93778fad690e7026f6abc34f4b4213565480c999bf9ca4eca7ae516e6e6",
+      "executable": true
+    },
+    "TOSIOS/packages/client/src/game/assets/images/prop/potion-red-3.png": {
+      "sha256": "3f22e9f11f246f853fe694fab2057c4a120f7b341ac156cf230f14b583a03185",
+      "executable": true
+    },
+    "TOSIOS/packages/client/src/game/assets/images/prop/potion-red-4.png": {
+      "sha256": "d51ea93778fad690e7026f6abc34f4b4213565480c999bf9ca4eca7ae516e6e6",
+      "executable": true
+    },
+    "TOSIOS/packages/client/src/game/assets/images/utils.ts": {
+      "sha256": "3201e875acc47780d391b86d830eac64cb21b207752706aa344bd4c897562738",
+      "executable": false
+    },
+    "TOSIOS/packages/client/src/game/assets/images/weapon/bullet.png": {
+      "sha256": "f01b12c68731ffee5fd876a9ead1ed92806d310f1ef3d2685651c6597359d9ed",
+      "executable": true
+    },
+    "TOSIOS/packages/client/src/game/assets/images/weapon/fire-1.png": {
+      "sha256": "209c72ed50879af0e615013ed469b19e16b9f285a671ad6c6e894aeff9cdb554",
+      "executable": false
+    },
+    "TOSIOS/packages/client/src/game/assets/images/weapon/fire-2.png": {
+      "sha256": "f66a467042fd5d2799453e6ca936590227885cd208f82fd5b4530578dbc3b4e5",
+      "executable": false
+    },
+    "TOSIOS/packages/client/src/game/assets/images/weapon/fire-3.png": {
+      "sha256": "471a0ffa2584b5c010d6409376b435dd598256317546a9f1de5531538fce63f7",
+      "executable": false
+    },
+    "TOSIOS/packages/client/src/game/assets/images/weapon/fire-4.png": {
+      "sha256": "d11102478e1325962b9035247df27863b7ac636f0d94c49684d987550c95297f",
+      "executable": false
+    },
+    "TOSIOS/packages/client/src/game/assets/images/weapon/fire-5.png": {
+      "sha256": "f633544c39b62f1f25922fe56a0ab827dcfdfd840f9043a9d9e1a7fa299d6f87",
+      "executable": false
+    },
+    "TOSIOS/packages/client/src/game/assets/images/weapon/index.ts": {
+      "sha256": "6aa108c18240caa30efe4a3ad8aceb03101e0252a29274e4432bce9579a20025",
+      "executable": false
+    },
+    "TOSIOS/packages/client/src/game/assets/images/weapon/staff.png": {
+      "sha256": "bf6d264270d02b8fc378c05e87c5fe92e28ced214d6fd6adea67cd29178a8792",
+      "executable": false
+    },
+    "TOSIOS/packages/client/src/game/assets/particles/bubble.json": {
+      "sha256": "1c658d119b09b40276cd921dfd98c58606bd5f6f734869c07791354510e7831b",
+      "executable": false
+    },
+    "TOSIOS/packages/client/src/game/assets/particles/bubble.png": {
+      "sha256": "6bd45ec057de4c637fcc04fb952cab4a68c63423709264215c8d7209735a3f80",
+      "executable": false
+    },
+    "TOSIOS/packages/client/src/game/assets/particles/impact.json": {
+      "sha256": "f875bcfd3434022d667f3bb133b4c056111097d1cb8bdddfdb4ffb8a2b516f85",
+      "executable": false
+    },
+    "TOSIOS/packages/client/src/game/assets/particles/impact.png": {
+      "sha256": "5e3688f460089cb33b24344ef5d55a4303c46c42c583084c4e26ba6eae1d5754",
+      "executable": false
+    },
+    "TOSIOS/packages/client/src/game/assets/particles/index.ts": {
+      "sha256": "dfdc1647b8e58574a529e5a446f679173088ea323467655d976c836440ba7853",
+      "executable": false
+    },
+    "TOSIOS/packages/client/src/game/assets/particles/smoke.json": {
+      "sha256": "2876140b0d495b680b95cc8eb903565e709b450c69b99a3ffc57535fc09812f3",
+      "executable": false
+    },
+    "TOSIOS/packages/client/src/game/assets/particles/smoke.png": {
+      "sha256": "d99604c6f0054398a5046636542bbfacd47c3ebd0989ed642f5841c3b159c2fc",
+      "executable": false
+    },
+    "TOSIOS/packages/client/src/game/assets/particles/trail.json": {
+      "sha256": "385faca1ed1a90d52a0dfa48be22839c0fec3dccc9be956b34dc43c607889ef0",
+      "executable": false
+    },
+    "TOSIOS/packages/client/src/game/assets/particles/trail100.png": {
+      "sha256": "5f2d571dc958545acd535c55ab8b0480c4f4d5ff9f0222adc1189fa389a571be",
+      "executable": false
+    },
+    "TOSIOS/packages/client/src/game/assets/particles/trail25.png": {
+      "sha256": "bd886d644afdd8f29c7a5f5c48c49846791487d2a8d4a32d5051132538c14ed8",
+      "executable": false
+    },
+    "TOSIOS/packages/client/src/game/assets/particles/trail50.png": {
+      "sha256": "dd3fee0477d10db189b3673d33050b36cf96143bdcdabbcd4930a06bef68b6ea",
+      "executable": false
+    },
+    "TOSIOS/packages/client/src/game/assets/sounds/explosion.ogg": {
+      "sha256": "4b597d658d0ae101f0a030fbeea5fc3a4292ab85f017470a8254a8e7959cbd69",
+      "executable": false
+    },
+    "TOSIOS/packages/client/src/game/assets/sounds/fire.ogg": {
+      "sha256": "8ab85f9fa85e9e692287f98acb36b9ac3ba15313b007c039055e286b736f4e3a",
+      "executable": false
+    },
+    "TOSIOS/packages/client/src/game/assets/sounds/footstep.ogg": {
+      "sha256": "9324ebb9b2c5bcd078dcb523c6518d38a9f34081069d511602c2efb14ce06ce2",
+      "executable": false
+    },
+    "TOSIOS/packages/client/src/game/assets/sounds/index.ts": {
+      "sha256": "1a728c5ef68c1833ee34768919951615f20171fc690181bed90da2a4e1135375",
+      "executable": false
+    },
+    "TOSIOS/packages/client/src/game/entities/BaseEntity.ts": {
+      "sha256": "ee5459c9157d4089abdf73751f47540e2f8108bf216a391460302082e9f4edff",
+      "executable": false
+    },
+    "TOSIOS/packages/client/src/game/entities/Bullet.ts": {
+      "sha256": "4d86c406abf02f78017429ea12c5bfcfc5fe30e97bf029df169ab00ba4dea1b8",
+      "executable": false
+    },
+    "TOSIOS/packages/client/src/game/entities/Monster.ts": {
+      "sha256": "6dc251d8cc7abeea366423ca288896b7fc1a34830182e404635d489ed614ccb0",
+      "executable": false
+    },
+    "TOSIOS/packages/client/src/game/entities/Player.ts": {
+      "sha256": "46211cd64cc14a1f885cd8b63b8c205963a31b7293b1203c5d3a4292e540b338",
+      "executable": false
+    },
+    "TOSIOS/packages/client/src/game/entities/Prop.ts": {
+      "sha256": "eedb755a558f82dab8b99cb19d8a947e431bd15e6c65f526f9bc1d5e70ceca10",
+      "executable": false
+    },
+    "TOSIOS/packages/client/src/game/entities/index.ts": {
+      "sha256": "27576876fd85d818d5c7bd5a0e039aa94d4635fe5a57c43dbf26e535887ce95b",
+      "executable": false
+    },
+    "TOSIOS/packages/client/src/game/managers/BaseManager.ts": {
+      "sha256": "34e350b8abe74340353d9d31749ba26db10392c09f699d0e860331e14aca0c84",
+      "executable": false
+    },
+    "TOSIOS/packages/client/src/game/managers/BulletsManager.ts": {
+      "sha256": "bdd03dcb0875c79c8a90704edf44bec9c08800f5126c2d05318c48377bc8514f",
+      "executable": false
+    },
+    "TOSIOS/packages/client/src/game/managers/MonstersManager.ts": {
+      "sha256": "5a7b5136ec322e59da9b1e8cd4686345289d78eca65cf8027702a3f29a84d95d",
+      "executable": false
+    },
+    "TOSIOS/packages/client/src/game/managers/PlayersManager.ts": {
+      "sha256": "c2786d65a401e8261d5ae9d81fb4ddbd4c4c9d845d7cdfacd0f25ccbc85cc190",
+      "executable": false
+    },
+    "TOSIOS/packages/client/src/game/managers/PropsManager.ts": {
+      "sha256": "a6828efd79e1d511407cb092e7f659f9ad4c0f60c9059261368516898aa999e6",
+      "executable": false
+    },
+    "TOSIOS/packages/client/src/game/managers/index.ts": {
+      "sha256": "b8111a32ecca418284cbd74d4a508fcc1d2b223900292125529bd1336ed3ba7d",
+      "executable": false
+    },
+    "TOSIOS/packages/client/src/game/sprites/AnchorContainer.ts": {
+      "sha256": "f0f1baabde7489f4063d7cb0ca9beabe3609ffa616d9b7163d93991a29c1763c",
+      "executable": false
+    },
+    "TOSIOS/packages/client/src/game/sprites/CircleSprite.ts": {
+      "sha256": "be0f0972496c0d29062e93e70cac35563db47951dba83b29b8c787dcc4b3caef",
+      "executable": false
+    },
+    "TOSIOS/packages/client/src/game/sprites/LineSprite.ts": {
+      "sha256": "262fbf2e4b8c605ef77c13d5a91f539b3d1721e9dcb317a4a7e679ffdc876f25",
+      "executable": false
+    },
+    "TOSIOS/packages/client/src/game/sprites/PlayerLivesSprite.ts": {
+      "sha256": "947bc84c4197a81680c7a894cb12db8ae3066360161f5de1d913feb238810b6c",
+      "executable": false
+    },
+    "TOSIOS/packages/client/src/game/sprites/RectangleSprite.ts": {
+      "sha256": "0563dbb208973117a7e746b424a0861195564509dd936554748520312a5e7938",
+      "executable": false
+    },
+    "TOSIOS/packages/client/src/game/sprites/TextSprite.ts": {
+      "sha256": "b9254e0f5c1dc1192f2fb1539a48d98ab7bd0196cf260cd014bfda68f029889f",
+      "executable": false
+    },
+    "TOSIOS/packages/client/src/game/sprites/effects.ts": {
+      "sha256": "4b9deea0f44eb5c2f4b1c04e78c686d7a397e417e3f0df0e2082d029a18f880c",
+      "executable": false
+    },
+    "TOSIOS/packages/client/src/game/sprites/index.ts": {
+      "sha256": "c0a0f7aca4daadcec9006ba396ae6d615e9e245d8fe3a4c2165ebfb4ffbacbe0",
+      "executable": false
+    },
+    "TOSIOS/packages/client/src/game/utils/distance.ts": {
+      "sha256": "e1bce09d38d3da1b5d481f797dc35b62137be59408f12f1b31b44015d5e5035a",
+      "executable": false
+    },
+    "TOSIOS/packages/client/src/game/utils/inputs.ts": {
+      "sha256": "398adb75eb6bac1a1c67e3be45da11e88be545fdb9b8fb161170ead2824ef871",
+      "executable": false
+    },
+    "TOSIOS/packages/client/src/game/utils/tiled.ts": {
+      "sha256": "bd2c47fa812e75906a983b335d7554a637708a23cdb6a6615e05f71882acc304",
+      "executable": false
+    },
+    "TOSIOS/packages/client/src/hooks/index.ts": {
+      "sha256": "3552c126be9fbbad0509a0b3a92404b57522119ab94e799c3d543a1886e8c441",
+      "executable": false
+    },
+    "TOSIOS/packages/client/src/hooks/useHover.tsx": {
+      "sha256": "529eb87fa8d1863807d08cd728829d4e27e1a8a1b48ace2e48e0104bfd4049e6",
+      "executable": false
+    },
+    "TOSIOS/packages/client/src/icons/account-multiple.svg": {
+      "sha256": "89f817ce72e964ea1130121380cb3e9126778289069df92cfbd51c567434206d",
+      "executable": false
+    },
+    "TOSIOS/packages/client/src/icons/arrow-left.svg": {
+      "sha256": "1dc82664b88ef0325f902b8b466be97373d2417960c0f0020d376f5a110f4f29",
+      "executable": false
+    },
+    "TOSIOS/packages/client/src/icons/github.svg": {
+      "sha256": "b9433f86b1805775640cabfb79e5bba3fd79c53325e3365bd29a307c8a875ee7",
+      "executable": false
+    },
+    "TOSIOS/packages/client/src/icons/index.ts": {
+      "sha256": "89cbfc8caf6aa1e6b7d57c3efc4a3c13e7ec73be2c2693d370689e3097a97d18",
+      "executable": false
+    },
+    "TOSIOS/packages/client/src/icons/lock-open.svg": {
+      "sha256": "a7a26133e70cbd76f66b1797fbce654649db10e2eb02d4d33bdf16f91e17ac61",
+      "executable": false
+    },
+    "TOSIOS/packages/client/src/icons/lock.svg": {
+      "sha256": "cd8a9f9bee7edd290eb5223af7f011a0cc28a30d53ae5daba967c7011027c1ae",
+      "executable": false
+    },
+    "TOSIOS/packages/client/src/icons/magic-wand.svg": {
+      "sha256": "f1330dfb387cdc8cc867ed5d604dcec0c69677db8708bff31ff38b8c6808a276",
+      "executable": false
+    },
+    "TOSIOS/packages/client/src/icons/menu.svg": {
+      "sha256": "4d6652c3dd7e85a5c09095e01150697ed3f0f43883eab11e1e71d6bffbe93b60",
+      "executable": false
+    },
+    "TOSIOS/packages/client/src/icons/refresh.svg": {
+      "sha256": "063d268119495750f78beeb3a3f384ffafe56d4b2a63c523d90deb4191438a7e",
+      "executable": false
+    },
+    "TOSIOS/packages/client/src/images/heart-empty.png": {
+      "sha256": "1308cd154f306d44e5d5ca416d50298070d6808c9ddb31bffb3d92c5d3050874",
+      "executable": false
+    },
+    "TOSIOS/packages/client/src/images/heart-full.png": {
+      "sha256": "0b9bcaf3548422c156d4e17d1176313ccc75e9da44f0a08d1a79ae424540db0b",
+      "executable": false
+    },
+    "TOSIOS/packages/client/src/images/index.ts": {
+      "sha256": "e6348cc2ccad22e67a151ed7115bea13ecdc280e854f203d41e24d1f2b5f07be",
+      "executable": false
+    },
+    "TOSIOS/packages/client/src/images/player.png": {
+      "sha256": "fd524712994475fc87a92d7e2d1db411457b184c3ad9d75e92292aa8f63db04d",
+      "executable": false
+    },
+    "TOSIOS/packages/client/src/images/title.png": {
+      "sha256": "dfc98049083a363ed2dfafe753115ea11a3c39b3eab25fda495582aa8113da6c",
+      "executable": false
+    },
+    "TOSIOS/packages/client/src/index.css": {
+      "sha256": "b79053a1eb4b92cd94a35922dc82e7ef6466a0af8bf34b3c119ed31b89f37f24",
+      "executable": true
+    },
+    "TOSIOS/packages/client/src/index.tsx": {
+      "sha256": "b08275f3f44b03723d894a48d66b84657140549fc65c0f9e5d3365c2f6bd0405",
+      "executable": true
+    },
+    "TOSIOS/packages/client/src/screens/Game/Game.tsx": {
+      "sha256": "9ff1b8d58ae48c805f9716c409bada17df1d0a96e19460d87f0e3f05ca30cb8c",
+      "executable": false
+    },
+    "TOSIOS/packages/client/src/screens/Game/components/HUD/Announce.tsx": {
+      "sha256": "6a0c4973dcd276691852e6ea4d04de077219e53bd3254438ae1255ea7afbf980",
+      "executable": false
+    },
+    "TOSIOS/packages/client/src/screens/Game/components/HUD/Container.tsx": {
+      "sha256": "e66cd64b77e25db34ef56cfe57c3fbd36f9ab00973c190373651558e2f23a13a",
+      "executable": false
+    },
+    "TOSIOS/packages/client/src/screens/Game/components/HUD/HUD.tsx": {
+      "sha256": "a8930e05653e179684b940948cdc5518a04a590dd81fc5f5ea02e45268f71610",
+      "executable": false
+    },
+    "TOSIOS/packages/client/src/screens/Game/components/HUD/Health.tsx": {
+      "sha256": "c2d0daa9876b91ec7415c851899a33e9867eaf36dd245836d494c7e51f623eeb",
+      "executable": false
+    },
+    "TOSIOS/packages/client/src/screens/Game/components/HUD/IconButton.tsx": {
+      "sha256": "cecd56cdb42fc0e72f4e14d8d79407cfa574aadccd10c79d70a30ade6c1089fc",
+      "executable": false
+    },
+    "TOSIOS/packages/client/src/screens/Game/components/HUD/Leaderboard.tsx": {
+      "sha256": "eb93d1cde63f917758597e1d3601d0533759d571e6a497f1913e20fc67fc441f",
+      "executable": false
+    },
+    "TOSIOS/packages/client/src/screens/Game/components/HUD/Menu.tsx": {
+      "sha256": "80b6dcf3654fc50d3390b6dd2692bcc3bcbd467e8f30fe40e4e85eccf2a83231",
+      "executable": false
+    },
+    "TOSIOS/packages/client/src/screens/Game/components/HUD/Messages.tsx": {
+      "sha256": "717eafe3f05e1cb357c96e2d1227ed203d155116ad6240384f82245da7c9d97c",
+      "executable": false
+    },
+    "TOSIOS/packages/client/src/screens/Game/components/HUD/Players.tsx": {
+      "sha256": "04b1324b875f30e62bfc59296d28c0e6f233d8c29b893dbd1cdbd2ebe87f5fdb",
+      "executable": false
+    },
+    "TOSIOS/packages/client/src/screens/Game/components/HUD/Time.tsx": {
+      "sha256": "39a379823938a9b2f3a0ae6f4ccc6754ba794dc3c2adc25e7485886d45822bca",
+      "executable": false
+    },
+    "TOSIOS/packages/client/src/screens/Game/components/HUD/index.ts": {
+      "sha256": "cb930719a3fe2f3431acbc8237836a42de09b49dcef2b8fa0cbbefaa0801f5fe",
+      "executable": false
+    },
+    "TOSIOS/packages/client/src/screens/Game/components/JoySticks.tsx": {
+      "sha256": "8fc16f216f7ace6a806740f6a6fd37071e627b6ad537a23be7b2d6a4960d53f5",
+      "executable": false
+    },
+    "TOSIOS/packages/client/src/screens/Home/Home.tsx": {
+      "sha256": "fb43fe909483b0497a576f5c8251f14fd60aab447c54b270104762e1f682e769",
+      "executable": false
+    },
+    "TOSIOS/packages/client/src/screens/Home/components/Footer.tsx": {
+      "sha256": "9f743e05a2c74ba8eabfb8e7c96a81c6db5bd8bba2b28b82e1c2aa2df9a1a16e",
+      "executable": false
+    },
+    "TOSIOS/packages/client/src/screens/Home/components/Header.tsx": {
+      "sha256": "384910a14c39c56378fdeea2a24965766b5a05980c03d1a2b8790c79ae57cc34",
+      "executable": false
+    },
+    "TOSIOS/packages/client/src/screens/Home/components/NameField.tsx": {
+      "sha256": "a89cff913bbbd10bbef0e399a46a6958ecec6c24155c465a76821ae8cb885afb",
+      "executable": false
+    },
+    "TOSIOS/packages/client/src/screens/Home/components/NewGameField.tsx": {
+      "sha256": "6adf049eab1b6a1010fc04bde238fa859b6bb51d6da9c5aa505a0ad32b7b79b6",
+      "executable": false
+    },
+    "TOSIOS/packages/client/src/screens/Home/components/RoomsList.tsx": {
+      "sha256": "25b9bbec5af628fd784a0bf4c4e33eeec0cb17b311f0a8957f5cf0f930c69257",
+      "executable": false
+    },
+    "TOSIOS/packages/common/package.json": {
+      "sha256": "b07ac9919039071a5e380637c9b0251b83a337a0cad66a77819dbba6e4aed42c",
+      "executable": false
+    },
+    "TOSIOS/packages/common/src/collisions/collisions.ts": {
+      "sha256": "fa9d83d5aa695fdc580113d4ea503062714bf3534e0585ce21555964f44f1132",
+      "executable": false
+    },
+    "TOSIOS/packages/common/src/collisions/index.ts": {
+      "sha256": "189c28cdd97a7503364e4637cd6d78cbb350beb7d10e4f53a235f44d567d5c24",
+      "executable": false
+    },
+    "TOSIOS/packages/common/src/collisions/types.ts": {
+      "sha256": "95ff9957097c10a358aa8d8647993dab9605575f2db331128cf06f89ac22b317",
+      "executable": false
+    },
+    "TOSIOS/packages/common/src/collisions/utils.ts": {
+      "sha256": "3cda17cb7b891ab5f9ebf9eaadc2620b3f65a9cfb0d185e3fe55a41ded0ec2b0",
+      "executable": false
+    },
+    "TOSIOS/packages/common/src/constants.ts": {
+      "sha256": "74162bcfc96643247108d203bfeba6b9c84e5870bf854c77220b08df6a030658",
+      "executable": false
+    },
+    "TOSIOS/packages/common/src/entities/index.ts": {
+      "sha256": "7073463f2be6cfdc9cbd1af5ae4d7ce916cdf793d64687c771f5ff9f3c913088",
+      "executable": false
+    },
+    "TOSIOS/packages/common/src/entities/map.ts": {
+      "sha256": "f04ee833210cfce01b8095df6e6d240604aa02240a0dceca611705f115fc2a16",
+      "executable": false
+    },
+    "TOSIOS/packages/common/src/geometry.ts": {
+      "sha256": "41ea5d7dd1d415198faf55df2fe24be41e6040bde28a96e21f473977ca56f2be",
+      "executable": false
+    },
+    "TOSIOS/packages/common/src/index.ts": {
+      "sha256": "19dbab5a6336431995171f689824f2d041676a186747f1bc7529899c7d372789",
+      "executable": false
+    },
+    "TOSIOS/packages/common/src/keys.ts": {
+      "sha256": "b032a15467b78ebf7529a1c1032a1e7d556fd49fd5493f3de771d19d21ac120b",
+      "executable": false
+    },
+    "TOSIOS/packages/common/src/maps/gigantic.json": {
+      "sha256": "d4661eef426dea9eb22277a16cb71da7338a77ef75d05178a370f308f6d749a3",
+      "executable": false
+    },
+    "TOSIOS/packages/common/src/maps/index.ts": {
+      "sha256": "e288b3ab376a4515805aa76fb3b9ece2f19ced802ecb946211ccb6b4a8f1909e",
+      "executable": false
+    },
+    "TOSIOS/packages/common/src/maps/small.json": {
+      "sha256": "d246b2e1ff78f80998c3094ff36372ea09da7caab6017916d97e79f787a630f9",
+      "executable": false
+    },
+    "TOSIOS/packages/common/src/maths.ts": {
+      "sha256": "77e8bf4cb5474b5ffeec99431a1049e921e8cedc9d107b3fd394838792d7393d",
+      "executable": false
+    },
+    "TOSIOS/packages/common/src/models/Action.ts": {
+      "sha256": "96c3701ab7198908573c60ec8649afd85a81f8c45db42ea8cb0af943cb20cb10",
+      "executable": false
+    },
+    "TOSIOS/packages/common/src/models/Bullet.ts": {
+      "sha256": "144895e906659aeb2db96267fe2a6b44923ffbeae85adbc70175fe53e1c9b4c0",
+      "executable": false
+    },
+    "TOSIOS/packages/common/src/models/Message.ts": {
+      "sha256": "77be69883a7a9c10dcc15e36f56cab48f6e054daae0f57f8c1832d71ee41732f",
+      "executable": false
+    },
+    "TOSIOS/packages/common/src/models/Monster.ts": {
+      "sha256": "ceca4d7b4dc59fbd88ec20850da0568899195f1e6a0fa97ba3c6ce526405c6c0",
+      "executable": false
+    },
+    "TOSIOS/packages/common/src/models/Player.ts": {
+      "sha256": "4fe5b973ee03dcc10c35e9e0fb555049acbac5c38b8b85da72f116f0be72efee",
+      "executable": false
+    },
+    "TOSIOS/packages/common/src/models/Prop.ts": {
+      "sha256": "23d7d6dbfea916104544e298a87075c1aa576039d026409b89bf22777dbf5e7c",
+      "executable": false
+    },
+    "TOSIOS/packages/common/src/models/index.ts": {
+      "sha256": "6bc35e88fdaeb775485fac727cd918e2b2c1530fe9f77e32b96fccd1b77cfad5",
+      "executable": false
+    },
+    "TOSIOS/packages/common/src/sort.ts": {
+      "sha256": "6cf5d3ee94a9f8243285c041a41030900ad2501dcaf04b224746176d5adcf0db",
+      "executable": false
+    },
+    "TOSIOS/packages/common/src/tiled/index.ts": {
+      "sha256": "7f63203e40ab0f1c0b12790b4adfa0d70b466ea82f66a8599860871c19df062c",
+      "executable": false
+    },
+    "TOSIOS/packages/common/src/tiled/map.ts": {
+      "sha256": "3f0725ccf096fafb465fddb15938337a725ca4011daf0feae5f36be721aae1e1",
+      "executable": false
+    },
+    "TOSIOS/packages/common/src/tiled/tmx.ts": {
+      "sha256": "64a6f703fdf0af328a3de84de906cb8aff2cd1ef57e137b0ee1be02aad5d1860",
+      "executable": false
+    },
+    "TOSIOS/packages/common/src/tiled/types.ts": {
+      "sha256": "33986e93023fb68ce1ab73a201f64de8583de54305d84f0d8101e11e1ed0c0bc",
+      "executable": false
+    },
+    "TOSIOS/packages/common/src/types.ts": {
+      "sha256": "226e191b2d735dc3f94a931b23a323f2e52a2de2f1c76d6e7fb4b616e41c554f",
+      "executable": false
+    },
+    "TOSIOS/scripts/build-client.ts": {
+      "sha256": "568a77c979d7d325654d924ae345cc083493f624d97a4c66b68d154d549183fb",
+      "executable": false
+    },
+    "TOSIOS/tsconfig.json": {
+      "sha256": "de777a2f8d829db8dd2bfde862ad79e911ac616b9979ef3ef2e59d32b90cd76a",
+      "executable": false
+    },
+    "TOSIOS/yarn.lock": {
+      "sha256": "10a594892f14802c0ac843fa504c584522828911cd7176364d06563e6d623efd",
+      "executable": false
+    }
+  },
+  "client_config": {
+    "file": "TOSIOS/packages/client/public/client-config.js",
+    "format": "javascript"
+  }
+}
