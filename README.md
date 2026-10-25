@@ -57,3 +57,9 @@ Patch reconstruction and the production web build have been checked.
 Original game: Aymeric Chauvin and TOSIOS contributors, MIT.
 See [CREDITS.md](CREDITS.md) for third-party acknowledgements. Preserve upstream
 licence notices with the reconstructed client.
+
+## Licence
+
+Gamira’s client integration changes are licensed under [MIT](LICENSE). Original
+upstream copyright and licence notices are preserved in [NOTICE.md](NOTICE.md)
+and [LICENSES/](LICENSES/). Third-party assets and dependencies retain their own terms.
